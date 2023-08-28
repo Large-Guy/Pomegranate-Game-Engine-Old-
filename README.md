@@ -1,4 +1,6 @@
 # POMEGRANATE GAME ENGINE (WIP)
+Don't have a logo so here's a CC0 image.
+![Pomegranate](https://images.pexels.com/photos/4230630/pexels-photo-4230630.jpeg)
 ## About
 Pomegranate engine is a 3d linux engine. (cross-platform support is planned.) It intends to be a nice simple engine, with a simple, pretty UI, and easily modifiable with custom plugins. The engine currently is in pre-alpha, and will probably be there for a long time.
 ## Compiling
