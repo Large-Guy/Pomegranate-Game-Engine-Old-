@@ -7,7 +7,7 @@ Pomegranate engine is a 3d linux game engine. (cross-platform support is planned
 
 To be honest I barely know how I compiled this. So good luck.  
 
-Assimp and OpenGL are required.
+Assimp, GLFW, and OpenGL are required.
 
 If you are running this on something other than linux you will probably have to compile teascript yourself. https://github.com/RevengerWizard/teascript
 ## Documentation
