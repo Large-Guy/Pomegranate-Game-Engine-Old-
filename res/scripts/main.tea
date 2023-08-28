@@ -1,0 +1,41 @@
+import random
+import math
+import debug
+import input
+import pomegranate
+
+
+var time = 1.0
+
+function debug_cube(x,y,z,sx,sy,sz)
+{
+    debug.line([x+sx,y+sy,z+sz],[x-sx,y+sy,z+sz])
+    debug.line([x-sx,y+sy,z+sz],[x-sx,y-sy,z+sz])
+    debug.line([x-sx,y-sy,z+sz],[x+sx,y-sy,z+sz])
+    debug.line([x+sx,y-sy,z+sz],[x+sx,y+sy,z+sz])
+    debug.line([x+sx,y+sy,z-sz],[x-sx,y+sy,z-sz])
+    debug.line([x-sx,y+sy,z-sz],[x-sx,y-sy,z-sz])
+    debug.line([x-sx,y-sy,z-sz],[x+sx,y-sy,z-sz])
+    debug.line([x+sx,y-sy,z-sz],[x+sx,y+sy,z-sz])
+    debug.line([x+sx,y+sy,z+sz],[x+sx,y+sy,z-sz])
+    debug.line([x-sx,y+sy,z+sz],[x-sx,y+sy,z-sz])
+    debug.line([x-sx,y-sy,z+sz],[x-sx,y-sy,z-sz])
+    debug.line([x+sx,y-sy,z+sz],[x+sx,y-sy,z-sz])
+}
+function editor_draw()
+{
+    //print(pomegranate.add3([0,2,0],[0,1,0]))
+    debug.color(1.0,0.0,0.0)
+    debug.begin()
+    if(input.down(264))
+    {
+        time += 0.05;
+    }
+    if(input.down(265))
+    {
+        time -= 0.05;
+    }
+    debug.point(0,0,0)
+    debug.sphere([0,0,0],time)
+    debug.end()
+}

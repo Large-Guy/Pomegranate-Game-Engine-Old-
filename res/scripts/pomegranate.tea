@@ -1,0 +1,153 @@
+import math
+
+class Vector1
+{
+    constructor(x)
+    {
+        this.x = x;
+    }
+    distance_to(v)
+    {
+        return math.sqrt(this.x*this.x) 
+    }
+    add(v)
+    {
+        return this.x + v.x
+    }
+    sub(v)
+    {
+        return this.x - v.x
+    }
+    mul(v)
+    {
+        return this.x * v
+    }
+    div(v)
+    {
+        return this.x / v
+    }
+    ==(v)
+    {
+        return this.x == v.x
+    }
+    to_string()
+    {
+        return '({this.x})'
+    }
+}
+
+class Vector2
+{
+    constructor(x,y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+    distance_to(v)
+    {
+        return math.sqrt(this.x*this.x+this.y*this.y) 
+    }
+    add(v)
+    {
+        return Vector2(this.x + v.x, this.y + v.y)
+    }
+    sub(v)
+    {
+        return Vector2(this.x - v.x, this.y - v.y)
+    }
+    mul(v)
+    {
+        return Vector2(this.x * v, this.y * v)
+    }
+    div(v)
+    {
+        return Vector2(this.x / v, this.y / v)
+    }
+    ==(v)
+    {
+        return this.x == v.x and this.y == v.y
+    }
+    to_string()
+    {
+        return '({this.x}, {this.y})'
+    }
+}
+
+class Vector3
+{
+    constructor(x,y,z)
+    {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+    distance_to(v)
+    {
+        return math.sqrt(this.x*this.x+this.y*this.y+this.z*this.z) 
+    }
+    add(v)
+    {
+        return Vector3(this.x + v.x, this.y + v.y,this.z + v.z)
+    }
+    sub(v)
+    {
+        return Vector3(this.x - v.x, this.y - v.y,this.z - v.z)
+    }
+    mul(v)
+    {
+        return Vector3(this.x * v, this.y * v,this.z*v)
+    }
+    div(v)
+    {
+        return Vector3(this.x / v, this.y / v, thiz.z/v)
+    }
+    ==(v)
+    {
+        return this.x == v.x and this.y == v.y and this.z == v.z
+    }
+    to_string()
+    {
+        return '({this.x}, {this.y}, {this.z})'
+    }
+}
+
+class Vector4
+{
+    constructor(x,y,z,w)
+    {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.w = w;
+    }
+    distance_to(v)
+    {
+        return math.sqrt(this.x*this.x+this.y*this.y+this.z*this.z+this.w*this.w) 
+    }
+    add(v)
+    {
+        return Vector4(this.x + v.x, this.y + v.y,this.z + v.z,this.w + v.w)
+    }
+    sub(v)
+    {
+        return Vector4(this.x - v.x, this.y - v.y,this.z - v.z, this.w - v.w)
+    }
+    mul(v)
+    {
+        return Vector4(this.x * v, this.y * v,this.z*v, this.w * v)
+    }
+    div(v)
+    {
+        return Vector4(this.x / v, this.y / v, thiz.z/v, this.w / w)
+    }
+    ==(v)
+    {
+        return this.x == v.x and this.y == v.y and this.z == v.z and this.w == v.w
+    }
+    to_string()
+    {
+        return '({this.x}, {this.y}, {this.z}, {this.w})'
+    }
+}
+
+print("Pomegranate library loaded")
