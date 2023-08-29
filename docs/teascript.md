@@ -1,3 +1,4 @@
+### [...](engine.md)
 # Teascript
 ## About
 Teascript is a scripting language created by RevengerWizard. The source code can be found here: https://github.com/RevengerWizard/teascript
@@ -11,7 +12,9 @@ Documentation will be provided for both Pomegranate Engine and standalone execut
 
 ### Pomegranate Engine
 ```javascript
-debug_console_print("Hello, World!"); 
+import debug
+
+debug.print("Hello, World!"); 
 ```
 ### Standalone
 ```javascript
@@ -27,11 +30,13 @@ Variables are defined with the **var** keyword. The language is dynamically type
 ### Pomegranate Engine
 
 ```javascript
+import debug
+
 var A = 5  
 var B = 4  
 var C = A*B  
 var String = string(C)  
-debug_console_print(String) 
+debug.print(String) 
 ```
 
 ### Standalone
@@ -49,13 +54,15 @@ print(String)
 ## If Statements
 
 ```javascript
+import debug
+
 if(a == true)  
 {  
-    debug_console_print("A is true.");  
+    debug.print("A is true.");  
 }  
 else  
 {  
-    debug_console_print("A is false.");  
+    debug.print("A is false.");  
 }  
 ```
 ## Switch Statements
@@ -67,9 +74,11 @@ else
 ### Pomegranate Engine
 
 ```javascript 
+import debug
+
 for(var i in 0..100)  
 {  
-    debug_console_print(string(i));  
+    debug.print(string(i));  
 }
 ```
 ### Standalone
@@ -86,10 +95,12 @@ for(var i in 0..100)
 ### Pomegranate Engine
 
 ```javascript
+import debug
+
 var i = 0;  
 while(i < 100)  
 {  
-    debug_console_print(string(i))  
+    debug.print(string(i))  
     i += 1;  
 }
 ```
@@ -100,7 +111,7 @@ while(i < 100)
 var i = 0;  
 while(i < 100)  
 {  
-    debug_console_print(string(i))  
+    print(string(i))  
     i += 1;  
 }
 ```
