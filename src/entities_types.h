@@ -14,6 +14,7 @@
 #include"iostream"
 #include"shaders.h"
 #include"windows.h"
+
 class Camera3d : public Entity
 {
 private:
@@ -26,8 +27,9 @@ public:
     void set_current();
     glm::mat4 get_perspective_matrix(int w, int h);
     glm::mat4 get_view_matrix();
-    void draw(float delta);
+    void editor_draw(float delta);
 };
+
 class MeshRenderer : public Entity
 {
 public:
@@ -44,4 +46,5 @@ public:
     MeshRenderer(aiMesh* mesh, Material* material, std::string name);
     void draw(float delta);
 };
+
 #endif

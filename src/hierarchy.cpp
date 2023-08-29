@@ -1,5 +1,9 @@
 #include"hierarchy.h"
-static std::shared_ptr<Entity> selected_entity = std::shared_ptr<Entity>(nullptr);
+
+//Variables
+std::shared_ptr<Entity> Hierarchy::selected_entity  = std::shared_ptr<Entity>(nullptr);
+
+//Functions
 Hierarchy::Hierarchy() : selected_world_entity_ID(0), ID(0){}
 void Hierarchy::imgui_entity_children(std::shared_ptr<Entity> entity)
 {
@@ -77,5 +81,3 @@ void Hierarchy::draw()
     ImGui::EndChild();
     ImGui::End();
 }
-
-std::shared_ptr<Entity> Hierarchy::selected_entity  = std::shared_ptr<Entity>(nullptr);

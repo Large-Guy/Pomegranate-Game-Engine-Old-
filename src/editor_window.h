@@ -1,5 +1,6 @@
 #ifndef EDITOR_WINDOW_H
 #define EDITOR_WINDOW_H
+
 class EditorWindow
 {
 public:
@@ -12,4 +13,5 @@ public:
     virtual void update();
     virtual void draw();
 };
+
 #endif

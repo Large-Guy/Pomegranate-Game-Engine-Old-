@@ -1,10 +1,12 @@
 #ifndef ENTITY_H
 #define ENTITY_H
+
 #include"glm.hpp"
 #include "ext.hpp"
 #include"vector"
 #include"string"
 #include"memory"
+
 enum PropertyType
 {
     PROPERTY_FLOAT = 0,
@@ -17,10 +19,11 @@ enum PropertyType
     PROPERTY_ASSET = 8,
     PROPERTY_COLOR = 9,
 };
+
 class Entity
 {
 private:
-static int NODE_ID;
+    static int NODE_ID;
 public:
     std::vector<std::tuple<std::string,unsigned int,void*>> properties;
     std::string name;
@@ -33,12 +36,15 @@ public:
     glm::vec3 euler_angles;
     glm::vec3 rotation;
     glm::mat4 model_matrix;
-    Entity(glm::vec3 position, glm::vec3 scale, glm::vec3 rotation);
+
     Entity();
-    void add_property(std::string name, void* property, unsigned int type);
+    Entity(glm::vec3 position, glm::vec3 scale, glm::vec3 rotation);
+    void display_property(std::string name, void* property, unsigned int type);
     void add_child(std::shared_ptr<Entity> entity);
     virtual void update(float delta);
     virtual void draw(float delta);
+    virtual void editor_draw(float delta);
     glm::mat4 get_model_matrix(int i = -1);
 };
+
 #endif

@@ -1,4 +1,6 @@
 #include"color.h"
+
+//Functions
 Color::Color(float r, float g, float b, float a)
 {
     data = (float*)malloc(sizeof(float)*4);

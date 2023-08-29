@@ -1,4 +1,6 @@
 #include"pomegranate_lib.h"
+
+//Functions
 void teascript_vec3_add(TeaState* T)
 {
     glm::vec3 a = tea_tools_check_vec3(T,0);
@@ -8,6 +10,8 @@ void teascript_vec3_add(TeaState* T)
     tea_push_null(T);
 }
 
+
+//Tea module
 const TeaModule TeaModule_pomegranate[] = {
     {"add3",teascript_vec3_add}
 };

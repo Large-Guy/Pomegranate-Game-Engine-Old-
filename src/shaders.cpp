@@ -1,4 +1,6 @@
 #include"shaders.h"
+
+//Functions
 unsigned int make_module(const std::string& filepath, unsigned int module_type)
 {
     std::ifstream file;
@@ -71,6 +73,7 @@ void set_shader_matrix4_value(GLuint shaderProgram, const char* name,glm::mat4 v
         glUniformMatrix4fv(loc, 1,false, glm::value_ptr(value));
     }
 }
+
 Material::Material(std::string shader_path)
 {
     GL_shader_id = make_shader(shader_path + std::string("_vertex.glsl"), shader_path + std::string("_fragment.glsl"));

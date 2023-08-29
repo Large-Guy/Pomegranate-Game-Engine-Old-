@@ -1,4 +1,6 @@
 #include"world_edit.h"
+
+//Functions
 void editor_new_entity(AssetManager*asset_manager,Material* mat,World* world)
 {
     if(ImGui::BeginMenu("New Entity"))

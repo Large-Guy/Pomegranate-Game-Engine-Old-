@@ -1,8 +1,12 @@
 #include"windows.h"
+
+//Variables
 unsigned int* frameBufferData;
 int current_framebuffer_width;
 int currrent_framebuffer_height;
 GLFWwindow* window;
+
+//Functions
 GLFWwindow* OpenWindow(int width, int height, const char* Name)
 {
     GLFWwindow* window;

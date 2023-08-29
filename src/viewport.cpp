@@ -1,3 +1,4 @@
+//Functions
 Viewport::Viewport(GLuint texture)
 {
     this->texture = texture;

@@ -54,9 +54,9 @@ void tea_tools_push_vec3(TeaState* T,glm::vec3 v)
 {
     tea_new_list(T);
     tea_push_number(T,(double)v.x);
-    tea_add_item(T,-1);
+    tea_add_item(T,-2);
     tea_push_number(T,(double)v.y);
-    tea_add_item(T,-1);
+    tea_add_item(T,-2);
     tea_push_number(T,(double)v.z);
-    tea_add_item(T,-1);
+    tea_add_item(T,-2);
 }

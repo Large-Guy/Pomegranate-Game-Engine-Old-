@@ -1,4 +1,9 @@
 #include"world.h"
+
+//Variables
+World* World::current = nullptr;
+
+//Functions
 World::World()
 {
     entities = std::vector<std::shared_ptr<Entity>>();
@@ -85,4 +90,3 @@ void World::draw(int render_layers)
         }
     }
 }
-World* World::current = nullptr;

@@ -1,15 +1,18 @@
 #ifndef WORLD_H
 #define WORLD_H
+
 #include"vector"
 #include"memory"
 #include"string"
 #include"entity.h"
 #include"iostream"
+
 class World
 {
 public:
     std::vector<std::shared_ptr<Entity>> entities;
     static World* current;
+    
     World();
     void add_entity(std::shared_ptr<Entity> entity);
     std::shared_ptr<Entity> get_entity(std::string name);
