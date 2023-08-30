@@ -7,6 +7,7 @@ import input
 ```
 ## input.down
 ### Parameters: (char) key or (int) key
+### Return: (bool) is_pressed
 ```javascript
 if(input.down('Z'))
 {
@@ -19,6 +20,7 @@ if(input.down(90)) //Z ascii value
 ```
 ## input.up
 ### Parameters: (char) key or (int) key
+### Return: (bool) is_not_pressed
 ```javascript
 if(input.up('Z'))
 {
@@ -32,6 +34,7 @@ if(input.up(90)) //Z ascii value
 
 ## input.axis
 ### Parameters: (char) negative_key or (int) negative_key, (char) positive_key or (int) positive_key
+### Return: (float) axis_value
 ```javascript
 var direction = input.axis('A','D')
 if(direction < 0)

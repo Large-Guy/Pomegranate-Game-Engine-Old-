@@ -30,3 +30,10 @@ if(window.button("Say Hello"))
     print("Hello!")
 }
 ```
+
+## window.text()
+
+### Parameters: (string)text
+```javascript
+window.text("Hello!")
+```
