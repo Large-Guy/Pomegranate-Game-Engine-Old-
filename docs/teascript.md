@@ -12,8 +12,6 @@ Documentation will be provided for both Pomegranate Engine and standalone execut
 
 ### Pomegranate Engine
 ```javascript
-import debug
-
 debug.print("Hello, World!"); 
 ```
 ### Standalone
@@ -30,8 +28,6 @@ Variables are defined with the **var** keyword. The language is dynamically type
 ### Pomegranate Engine
 
 ```javascript
-import debug
-
 var A = 5  
 var B = 4  
 var C = A*B  
@@ -49,13 +45,88 @@ var String = string(C)
 print(String) 
 ```
 
+# Ranges
+
+Ranges create a list of numbers from a to b.
+
+### Pomegranate Engine
+
+```javascript
+debug.print(string(0..10)) //prints range from 0 to 10
+```
+
+### Standalone
+
+```javascript
+print(0..10) //prints range from 0 to 10
+```
+
+# Arrays
+
+Arrays store a list of values.
+
+### Pomegranate Engine
+
+```javascript
+var arr = [1,2,3]
+debug.print(string(arr))
+```
+
+### Standalone
+
+```javascript
+var arr = [1,2,3]
+print(arr)
+```
+## Array.add
+
+### Parameters: (any) value
+
+### Pomegranate Engine
+
+```javascript
+var arr = [1,2]
+debug.print(string(arr))
+arr.add(3)
+debug.print(string(arr))
+```
+
+### Standalone Engine
+
+```javascript
+var arr = [1,2]
+print(arr)
+arr.add(3)
+print(arr)
+```
+
+## Array.remove
+
+### Parameters: (any) value
+
+### Pomegranate Engine
+
+```javascript
+var arr = [1,2,3,4]
+debug.print(string(arr))
+arr.remove(arr[3])
+debug.print(string(arr))
+```
+
+### Standalone Engine
+
+```javascript
+var arr = [1,2,3,4]
+print(arr)
+arr.remove(arr[3])
+print(arr)
+```
+
 # Conditionals
 
 ## If Statements
 
 ```javascript
-import debug
-
 if(a == true)  
 {  
     debug.print("A is true.");  
@@ -74,8 +145,6 @@ else
 ### Pomegranate Engine
 
 ```javascript 
-import debug
-
 for(var i in 0..100)  
 {  
     debug.print(string(i));  
@@ -95,8 +164,6 @@ for(var i in 0..100)
 ### Pomegranate Engine
 
 ```javascript
-import debug
-
 var i = 0;  
 while(i < 100)  
 {  
