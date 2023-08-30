@@ -26,6 +26,10 @@ void teascript_vec2_sub(TeaState* T);
 void teascript_vec2_mul(TeaState* T);
 void teascript_vec2_div(TeaState* T);
 
+void teascript_vec4_dist(TeaState* T);
+void teascript_vec3_dist(TeaState* T);
+void teascript_vec2_dist(TeaState* T);
+
 void TeaModule_add_pomegranate(TeaState* T);
 
 #endif

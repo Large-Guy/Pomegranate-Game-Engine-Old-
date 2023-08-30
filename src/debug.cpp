@@ -125,7 +125,6 @@ void debug_end_frame()
     }
     glEnd();
 }
-
 //Tea module
 const TeaModule debug_module[] = 
 {

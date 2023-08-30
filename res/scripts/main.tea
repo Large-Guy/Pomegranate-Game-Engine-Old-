@@ -2,40 +2,88 @@ import random
 import math
 import debug
 import input
-import pomegranate
+import window
+import pomegranate as p
 
 
-var time = 1.0
+var position = [0.0,0.0,0.0]
+var velocity = [0.0,0.0,0.0]
 
-function debug_cube(x,y,z,sx,sy,sz)
+var time = 0.0
+
+var prev_positions = []
+var max_positions = 25
+prev_positions.add(position)
+var jump_pressed = false
+
+function editor_window()
 {
-    debug.line([x+sx,y+sy,z+sz],[x-sx,y+sy,z+sz])
-    debug.line([x-sx,y+sy,z+sz],[x-sx,y-sy,z+sz])
-    debug.line([x-sx,y-sy,z+sz],[x+sx,y-sy,z+sz])
-    debug.line([x+sx,y-sy,z+sz],[x+sx,y+sy,z+sz])
-    debug.line([x+sx,y+sy,z-sz],[x-sx,y+sy,z-sz])
-    debug.line([x-sx,y+sy,z-sz],[x-sx,y-sy,z-sz])
-    debug.line([x-sx,y-sy,z-sz],[x+sx,y-sy,z-sz])
-    debug.line([x+sx,y-sy,z-sz],[x+sx,y+sy,z-sz])
-    debug.line([x+sx,y+sy,z+sz],[x+sx,y+sy,z-sz])
-    debug.line([x-sx,y+sy,z+sz],[x-sx,y+sy,z-sz])
-    debug.line([x-sx,y-sy,z+sz],[x-sx,y-sy,z-sz])
-    debug.line([x+sx,y-sy,z+sz],[x+sx,y-sy,z-sz])
+    window.begin("Test Thingy Window")
+    if(window.button("Increase position count"))
+    {
+        max_positions += 25
+    }
+    if(window.button("Decrease position count"))
+    {
+        max_positions -= 25
+    }
+    window.end()
 }
+
 function editor_draw()
 {
-    //print(pomegranate.add3([0,2,0],[0,1,0]))
-    debug.color(1.0,0.0,0.0)
-    debug.begin()
-    if(input.down(264))
-    {
-        time += 0.05;
-    }
     if(input.down(265))
     {
-        time -= 0.05;
+        velocity = p.add3(velocity,p.mul3([0,0,1],0.05))
     }
-    debug.point(0,0,0)
-    debug.sphere([0,0,0],time)
+    if(input.down(264))
+    {
+        velocity = p.add3(velocity,p.mul3([0,0,-1],0.05))
+    }
+    if(input.down(263))
+    {
+        velocity = p.add3(velocity,p.mul3([1,0,0],0.05))
+    }
+    if(input.down(262))
+    {
+        velocity = p.add3(velocity,p.mul3([-1,0,0],0.05))
+    }
+    if(input.down('z') and !jump_pressed)
+    {
+        jump_pressed = true
+        velocity[1] = 0.5
+    }
+    if(input.up('z'))
+    {
+        jump_pressed = false
+    }
+    velocity[1] -= 0.02
+    velocity[0] = velocity[0]*0.9
+    velocity[2] = velocity[2]*0.9
+    position = p.add3(position,velocity)
+    if(position[1] < 1.0)
+    {
+        velocity[1] = 0.0
+        position[1] = 1.0
+    }
+    if(p.dist3(position,prev_positions[prev_positions.len-1]) > 0.1)
+    {
+        prev_positions.add(position)
+    }
+    if(prev_positions.len > max_positions)
+    {
+        prev_positions.remove(prev_positions[0])
+    }
+    time = 0.0
+    for(var i in 1..prev_positions.len)
+    {
+        time += math.pi/16
+        debug.color([math.sin(time)/2+0.5,math.sin(time*2)/2+0.5,math.sin(time*4)/2+0.5])
+        debug.begin()
+        debug.line(prev_positions[i-1],prev_positions[i])
+        debug.end()
+    }
+    debug.begin()
+    debug.sphere(position,0.25)
     debug.end()
 }

@@ -146,15 +146,17 @@ int main(int, char **)
     //Add modules
     TeaModule_add_debug(T_Main);
     TeaModule_add_input(T_Main);
+    TeaModule_add_window(T_Main);
     TeaModule_add_pomegranate(T_Main);
     
     //Get functions
     tea_set_global(T_Main,"editor_draw");
     tea_push_null(T_Main);
-
+    tea_set_global(T_Main,"editor_window");
+    tea_push_null(T_Main);
+    std::string Teascript_Main = readFileToString("../res/scripts/main.tea");
     //Interpret
-    tea_interpret(T_Main,"",readFileToString("../res/scripts/main.tea").c_str());
-
+    tea_interpret(T_Main,"",Teascript_Main.c_str());
     //Editor loop
     while (!glfwWindowShouldClose(window))
     {
@@ -163,7 +165,7 @@ int main(int, char **)
         glfwGetCursorPos(window,&editor_mouse_x,&editor_mouse_y);
 
         //Editor Update TODO: Move to its own script
-        float speed = 3.0f;
+        float speed = 10.0f;
         if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         {
             world_camera.position += glm::vec3(0,0,-1)*glm::quat(world_camera.rotation)*delta*speed;
@@ -210,7 +212,7 @@ int main(int, char **)
 
         //Editor base debug
         debug_begin_frame();
-        debug_set_color(glm::vec3(240, 246, 240)/255.0f);
+        debug_set_color(glm::vec3(44, 45, 45)/255.0f);
         int grid_size = 1000; //Should probably shrink
         for (int y = -grid_size; y <= grid_size; y++)
         {
@@ -222,10 +224,33 @@ int main(int, char **)
         //TODO: Implement proper world system
         world.set_current();
         world.draw(INT_MAX);
-        
-        //Call the T_MAIN editor draw function
-        tea_get_global(T_Main,"editor_draw");
-        tea_call(T_Main,0);
+        try
+        {
+            if(Teascript_Main != readFileToString("../res/scripts/main.tea"))
+            {
+                Teascript_Main = readFileToString("../res/scripts/main.tea");
+                tea_close(T_Main);
+                T_Main = tea_open();
+                //Add modules
+                TeaModule_add_debug(T_Main);
+                TeaModule_add_input(T_Main);
+                TeaModule_add_window(T_Main);
+                TeaModule_add_pomegranate(T_Main);
+                //Get functions
+                tea_set_global(T_Main,"editor_draw");
+                tea_push_null(T_Main);
+                tea_set_global(T_Main,"editor_window");
+                tea_push_null(T_Main);
+                tea_interpret(T_Main,"",Teascript_Main.c_str());
+            }
+            //Call the T_MAIN editor draw function
+            tea_get_global(T_Main,"editor_draw");
+            tea_call(T_Main,0);
+        }
+        catch(const std::exception& e)
+        {
+            std::cout << e.what() << '\n';
+        }
         
         //TODO: Move editor UI to its own script
 
@@ -249,6 +274,18 @@ int main(int, char **)
                 i--;
             }
         }
+        
+        try
+        {
+            //Call the T_MAIN editor window function
+            tea_get_global(T_Main,"editor_window");
+            tea_call(T_Main,0);
+        }
+        catch(const std::exception& e)
+        {
+            std::cout << e.what() << '\n';
+        }
+        
 
         if(ImGui::BeginMainMenuBar())
         {
