@@ -16,6 +16,7 @@ bool input_down(int key);
 void input_down_tea(TeaState*T);
 bool input_up(int key);
 void input_up_tea(TeaState*T);
+void teascript_input_axis(TeaState*T);
 void TeaModule_add_input(TeaState*T);
 
 #endif

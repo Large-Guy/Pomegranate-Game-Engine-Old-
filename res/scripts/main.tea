@@ -32,22 +32,8 @@ function editor_window()
 
 function editor_draw()
 {
-    if(input.down(265))
-    {
-        velocity = p.add3(velocity,p.mul3([0,0,1],0.05))
-    }
-    if(input.down(264))
-    {
-        velocity = p.add3(velocity,p.mul3([0,0,-1],0.05))
-    }
-    if(input.down(263))
-    {
-        velocity = p.add3(velocity,p.mul3([1,0,0],0.05))
-    }
-    if(input.down(262))
-    {
-        velocity = p.add3(velocity,p.mul3([-1,0,0],0.05))
-    }
+    velocity = p.add3(velocity,p.mul3([0,0,1],0.05*input.axis(264,265)))
+    velocity = p.add3(velocity,p.mul3([1,0,0],0.05*input.axis(262,263)))
     if(input.down('z') and !jump_pressed)
     {
         jump_pressed = true
