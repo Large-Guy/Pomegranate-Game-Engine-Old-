@@ -32,6 +32,14 @@ void teascript_text(TeaState*T)
     ImGui::Text("%s",txt);
     tea_push_null(T);
 }
+void teascript_checkbox(TeaState*T)
+{
+    int len;
+    const char* txt = tea_get_lstring(T,0,&len);
+    bool pressed = tea_get_bool(T,1);
+    ImGui::Checkbox(txt,&pressed);
+    tea_push_bool(T,pressed);
+}
 void teascript_end_window(TeaState* T)
 {
     ImGui::End();
@@ -40,10 +48,11 @@ void teascript_end_window(TeaState* T)
 
 //Tea Module
 const TeaModule window_module[] = {
-    {"begin",teascript_begin_window},
+    {"open",teascript_begin_window},
     {"button",teascript_button},
     {"text",teascript_text},
-    {"end",teascript_end_window},
+    {"checkbox",teascript_checkbox},
+    {"close",teascript_end_window},
     {NULL,NULL}
 };
 

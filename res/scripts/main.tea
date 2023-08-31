@@ -14,11 +14,13 @@ var time = 0.0
 var prev_positions = []
 var max_positions = 25
 prev_positions.add(position)
-var jump_pressed = false
+var jump_pressed = true
+
+var is_checkbox_checked = true
 
 function editor_window()
 {
-    window.begin("Test Thingy Window")
+    window.open("Test Thingy Window")
     if(window.button("Increase position count"))
     {
         max_positions += 25
@@ -27,7 +29,10 @@ function editor_window()
     {
         max_positions -= 25
     }
-    window.end()
+    is_checkbox_checked = window.checkbox("Is it checked?", is_checkbox_checked)
+    print(is_checkbox_checked)
+    window.close()
+    p.close("Yay! It works!")
 }
 
 function editor_draw()
