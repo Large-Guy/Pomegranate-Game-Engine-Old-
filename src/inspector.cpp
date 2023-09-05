@@ -47,6 +47,13 @@ void Inspector::display_float(float*v)
     ImGui::PopItemWidth();
     ImGui::PopID();
 }
+void Inspector::display_bool(bool*v)
+{
+    ImGui::PushItemWidth(120);
+    ImGui::Checkbox("BOOL", v);
+    ImGui::PopItemWidth();
+    ImGui::PopID();
+}
 void Inspector::display_string(std::string*v)
 {
     ImGui::PushItemWidth(120);
@@ -65,9 +72,10 @@ void Inspector::display_asset(std::string*v)
     ImGui::PopItemWidth();
     ImGui::PopID();
 }
-void Inspector::display_color(Color* v)
+void Inspector::display_color(glm::vec4* v)
 {
-    ImGui::ColorPicker4("COLOR", v->data);
+    float c[4] = {v->x,v->y,v->z,v->w};
+    ImGui::ColorPicker4("COLOR",c);
     ImGui::PopID();
 }
 void Inspector::draw()
@@ -86,57 +94,63 @@ void Inspector::draw()
         {
             //Push Id and display properties name
             ImGui::PushID(inspector_id++);
-            ImGui::Text(((std::string)std::get<0>(Hierarchy::selected_entity->properties[i])).c_str()); ImGui::SameLine();
+            ImGui::Text(Hierarchy::selected_entity->properties[i].name.c_str()); ImGui::SameLine();
             
             //Display properties
-            switch ((unsigned int)std::get<1>(Hierarchy::selected_entity->properties[i])) 
+            switch (Hierarchy::selected_entity->properties[i].type) 
             {
                 case PROPERTY_FLOAT: 
                 {
-                    float* v = ((float*)std::get<2>(Hierarchy::selected_entity->properties[i]));
+                    float* v = (float*)Hierarchy::selected_entity->properties[i].value;
                     display_float(v);
                     break;
                 }
                 case PROPERTY_STRING: 
                 {
-                    std::string* v = ((std::string*)std::get<2>(Hierarchy::selected_entity->properties[i]));
+                    std::string* v = (std::string*)Hierarchy::selected_entity->properties[i].value;
                     display_string(v);
                     break;
                 }
                 case PROPERTY_ASSET: 
                 {
-                    std::string* v = ((std::string*)std::get<2>(Hierarchy::selected_entity->properties[i]));
+                    std::string* v = (std::string*)Hierarchy::selected_entity->properties[i].value;
                     display_asset(v);
                     break;
                 }
                 case PROPERTY_VECTOR1: 
                 {
-                    glm::vec1* v = ((glm::vec1*)std::get<2>(Hierarchy::selected_entity->properties[i]));
+                    glm::vec1* v = (glm::vec1*)Hierarchy::selected_entity->properties[i].value;
                     display_vector1(v);
                     break;
                 }
                 case PROPERTY_VECTOR2: 
                 {
-                    glm::vec2* v = ((glm::vec2*)std::get<2>(Hierarchy::selected_entity->properties[i]));
+                    glm::vec2* v = (glm::vec2*)Hierarchy::selected_entity->properties[i].value;
                     display_vector2(v);
                     break;
                 }
                 case PROPERTY_VECTOR3: 
                 {
-                    glm::vec3* v = ((glm::vec3*)std::get<2>(Hierarchy::selected_entity->properties[i]));
+                    glm::vec3* v = (glm::vec3*)Hierarchy::selected_entity->properties[i].value;
                     display_vector3(v);
                     break;
                 }
                 case PROPERTY_VECTOR4: 
                 {
-                    glm::vec4* v = ((glm::vec4*)std::get<2>(Hierarchy::selected_entity->properties[i]));
+                    glm::vec4* v = (glm::vec4*)Hierarchy::selected_entity->properties[i].value;
                     display_vector4(v);
                     break;
                 }
                 case PROPERTY_COLOR: 
                 {
-                    Color* v = ((Color*)std::get<2>(Hierarchy::selected_entity->properties[i]));
+                    glm::vec4* v = (glm::vec4*)Hierarchy::selected_entity->properties[i].value;
                     display_color(v);
+                    break;
+                }
+                case PROPERTY_BOOL: 
+                {
+                    bool* v = (bool*)Hierarchy::selected_entity->properties[i].value;
+                    display_bool(v);
                     break;
                 }
             }

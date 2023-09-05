@@ -141,6 +141,6 @@ const TeaModule debug_module[] =
 
 void TeaModule_add_debug(TeaState* T)
 {
-    tea_create_module(T,"debug",debug_module);
+    tea_create_module(T,"Debug",debug_module);
     tea_pop(T,1); //Pop the module object
 }

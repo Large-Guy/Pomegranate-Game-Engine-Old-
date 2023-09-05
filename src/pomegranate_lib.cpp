@@ -132,6 +132,14 @@ void teascript_close_editor(TeaState*T)
     glfwSetWindowShouldClose(window,1);
     tea_push_null(T);
 }
+void teascript_editor_display(TeaState*T)
+{
+    int len = 0;
+    const char* property_name = tea_get_lstring(T,0,&len);
+    //Get current entity, add to properties
+    tea_push_null(T);
+}
+
 
 //Tea module
 const TeaModule TeaModule_pomegranate[] = {
@@ -162,6 +170,6 @@ const TeaModule TeaModule_pomegranate[] = {
 
 void TeaModule_add_pomegranate(TeaState* T)
 {
-    tea_create_module(T,"pomegranate",TeaModule_pomegranate);
+    tea_create_module(T,"Pomegranate",TeaModule_pomegranate);
     tea_pop(T,1);
 }

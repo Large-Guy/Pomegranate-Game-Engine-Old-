@@ -1,14 +1,14 @@
 #include"console.h"
 
-std::vector<std::string> Console::output;
+std::ostringstream Console::output;
 
 Console::Console()
 {
-    
+    Console::output = std::ostringstream();
 }
 void Console::print(std::string v)
 {
-    Console::output.push_back(v);
+    Console::output << v;
 }
 void Console::teascript_print(TeaState*T)
 {
@@ -21,7 +21,7 @@ void Console::teascript_print(TeaState*T)
 }
 void Console::clear()
 {
-    output.clear();
+    Console::output.str("");
 }
 void Console::teascript_clear(TeaState*T)
 {
@@ -33,11 +33,7 @@ void Console::draw()
 {
     ImGui::Begin((std::string("Console - WinID") + std::to_string(MyID)).c_str(),&open);
 
-    // Display the console output
-    for (const std::string& message : output)
-    {
-        ImGui::Text("%s", message.c_str());
-    }
+    ImGui::Text("%s", output.str().c_str());
 
     ImGui::End();
 }

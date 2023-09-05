@@ -58,6 +58,6 @@ const TeaModule window_module[] = {
 
 void TeaModule_add_window(TeaState*T)
 {
-    tea_create_module(T,"window",window_module);
+    tea_create_module(T,"Window",window_module);
     tea_pop(T,1); //Pop the module object
 }

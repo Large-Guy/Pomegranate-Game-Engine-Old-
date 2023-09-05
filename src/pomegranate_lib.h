@@ -12,6 +12,8 @@
 extern const TeaModule TeaModule_pomegranate[];
 
 //Functions
+
+//Vec
 void teascript_vec4_add(TeaState* T);
 void teascript_vec4_sub(TeaState* T);
 void teascript_vec4_mul(TeaState* T);
@@ -39,8 +41,9 @@ void teascript_vec4_nor(TeaState* T);
 void teascript_vec3_nor(TeaState* T);
 void teascript_vec2_nor(TeaState* T);
 
+//Editor
 //Temp
-void teascript_close_editor(TeaState*T);
+void teascript_editor_close(TeaState*T);
 
 void TeaModule_add_pomegranate(TeaState* T);
 

@@ -22,7 +22,8 @@ public:
     void display_float(float*v);
     void display_string(std::string*v);
     void display_asset(std::string*v);
-    void display_color(Color* v);
+    void display_color(glm::vec4*v);
+    void display_bool(bool*v);
     void draw() override;
 };
 

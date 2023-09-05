@@ -98,7 +98,6 @@ int main(int, char **)
     //Engine
 
     //Editor
-    Camera3d world_camera = Camera3d(90.0f,"Editor World Camera");
 
     //TODO: Add world loading
     World world = World();
@@ -130,6 +129,8 @@ int main(int, char **)
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
+    ImFont* main_font = io.Fonts->AddFontFromFileTTF("../res/fonts/default.ttf",20);
+    io.FontDefault = main_font;
     io.ConfigWindowsMoveFromTitleBarOnly = true;
     dark_editor_style();
     ImGui_ImplGlfw_InitForOpenGL(window,true);
@@ -137,16 +138,13 @@ int main(int, char **)
 
     //TODO: add delta to GameTime class
     float delta = 0.016f;
-    double editor_mouse_x = 0;
-    double editor_mouse_y = 0;
-    double prev_editor_mouse_x = editor_mouse_x;
-    double prev_editor_mouse_y = editor_mouse_y;
 
     TeaState* T_Main = tea_open();
     //Add modules
     TeaModule_add_debug(T_Main);
     TeaModule_add_input(T_Main);
     TeaModule_add_window(T_Main);
+    TeaModule_add_entity(T_Main);
     TeaModule_add_pomegranate(T_Main);
     
     //Get functions
@@ -162,43 +160,17 @@ int main(int, char **)
     {
         //Poll
         glfwPollEvents();
-        glfwGetCursorPos(window,&editor_mouse_x,&editor_mouse_y);
 
-        //Editor Update TODO: Move to its own script
-        float speed = 10.0f;
-        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+        //Editor Update
+        for (long unsigned int i = 0; i < Windows.size(); i++)
         {
-            world_camera.position += glm::vec3(0,0,-1)*glm::quat(world_camera.rotation)*delta*speed;
+            Windows[i]->update();
+            if(Windows[i]->open == false)
+            {
+                Windows.erase(Windows.begin() + i);
+                i--;
+            }
         }
-        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        {
-            world_camera.position += glm::vec3(0,0,1)*glm::quat(world_camera.rotation)*delta*speed;
-        }
-        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        {
-            world_camera.position += glm::vec3(-1,0,0)*glm::quat(world_camera.rotation)*delta*speed;
-        }
-        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        {
-            world_camera.position += glm::vec3(1,0,0)*glm::quat(world_camera.rotation)*delta*speed;
-        }
-        if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
-        {
-            world_camera.position += glm::vec3(0,1,0)*glm::quat(world_camera.rotation)*delta*speed;
-        }
-        if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
-        {
-            world_camera.position += glm::vec3(0,-1,0)*glm::quat(world_camera.rotation)*delta*speed;
-        }
-        if(glfwGetMouseButton(window,GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
-        {  
-            //TODO: Reimplement pitch
-            float yaw = glm::radians((float)editor_mouse_x - (float)prev_editor_mouse_x)*0.5f;
-            float pitch = glm::radians((float)editor_mouse_y - (float)prev_editor_mouse_y)*0.5f;
-            world_camera.rotation = glm::vec3(0.0f,world_camera.rotation.y + yaw,0.0f);
-        }
-        prev_editor_mouse_x = editor_mouse_x;
-        prev_editor_mouse_y = editor_mouse_y;
 
         //Render viewport
         glViewport(0, 0, current_framebuffer_width, currrent_framebuffer_height);
@@ -207,7 +179,7 @@ int main(int, char **)
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         //Set editor camera as current
-        world_camera.set_current();
+        Viewport::world_camera.set_current();
 
 
         //Editor base debug
@@ -216,8 +188,8 @@ int main(int, char **)
         int grid_size = 1000; //Should probably shrink
         for (int y = -grid_size; y <= grid_size; y++)
         {
-            debug_draw_line(glm::vec3(roundf(world_camera.position.x),0.0f,roundf(world_camera.position.z))+glm::vec3(-grid_size,0.0f,0.0f+y),glm::vec3(roundf(world_camera.position.x),0.0f,roundf(world_camera.position.z))+glm::vec3(grid_size,0.0f,0.0f+y));
-            debug_draw_line(glm::vec3(roundf(world_camera.position.x),0.0f,roundf(world_camera.position.z))+glm::vec3(0.0f+y,0.0f,-grid_size),glm::vec3(roundf(world_camera.position.x),0.0f,roundf(world_camera.position.z))+glm::vec3(0.0f+y,0.0f,grid_size));
+            debug_draw_line(glm::vec3(roundf(Viewport::world_camera.position.x),0.0f,roundf(Viewport::world_camera.position.z))+glm::vec3(-grid_size,0.0f,0.0f+y),glm::vec3(roundf(Viewport::world_camera.position.x),0.0f,roundf(Viewport::world_camera.position.z))+glm::vec3(grid_size,0.0f,0.0f+y));
+            debug_draw_line(glm::vec3(roundf(Viewport::world_camera.position.x),0.0f,roundf(Viewport::world_camera.position.z))+glm::vec3(0.0f+y,0.0f,-grid_size),glm::vec3(roundf(Viewport::world_camera.position.x),0.0f,roundf(Viewport::world_camera.position.z))+glm::vec3(0.0f+y,0.0f,grid_size));
         }
         debug_end_frame();
 
@@ -226,6 +198,7 @@ int main(int, char **)
         world.draw(INT_MAX);
         try
         {
+            Viewport::world_camera.entity_set_current();
             if(Teascript_Main != readFileToString("../res/scripts/main.tea"))
             {
                 Teascript_Main = readFileToString("../res/scripts/main.tea");
@@ -235,6 +208,7 @@ int main(int, char **)
                 TeaModule_add_debug(T_Main);
                 TeaModule_add_input(T_Main);
                 TeaModule_add_window(T_Main);
+                TeaModule_add_entity(T_Main);
                 TeaModule_add_pomegranate(T_Main);
                 //Get functions
                 tea_set_global(T_Main,"editor_draw");

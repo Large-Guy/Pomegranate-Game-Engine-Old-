@@ -60,6 +60,6 @@ const TeaModule input_module[] =
 
 void TeaModule_add_input(TeaState*T)
 {
-    tea_create_module(T,"input",input_module);
+    tea_create_module(T,"Input",input_module);
     tea_pop(T,1);
 }

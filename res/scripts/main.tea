@@ -1,9 +1,10 @@
 import random
 import math
-import debug
-import input
-import window
-import pomegranate as p
+import Debug
+import Input
+import Window
+import Entity
+import Pomegranate as p
 
 
 var position = [0.0,0.0,0.0]
@@ -16,35 +17,36 @@ var max_positions = 25
 prev_positions.add(position)
 var jump_pressed = true
 
-var is_checkbox_checked = true
+var is_checkbox_checked = false
 
 function editor_window()
 {
-    window.open("Test Thingy Window")
-    if(window.button("Increase position count"))
+    Window.open("Trail Window")
+    is_checkbox_checked = Window.checkbox("View Options", is_checkbox_checked)
+    if(is_checkbox_checked)
     {
-        max_positions += 25
+        if(Window.button("Increase position count"))
+        {
+            max_positions += 25
+        }
+        if(Window.button("Decrease position count"))
+        {
+            max_positions -= 25
+        }
     }
-    if(window.button("Decrease position count"))
-    {
-        max_positions -= 25
-    }
-    is_checkbox_checked = window.checkbox("Is it checked?", is_checkbox_checked)
-    print(is_checkbox_checked)
-    window.close()
-    p.close("Yay! It works!")
+    Window.close()
 }
 
 function editor_draw()
 {
-    velocity = p.add3(velocity,p.mul3([0,0,1],0.05*input.axis(264,265)))
-    velocity = p.add3(velocity,p.mul3([1,0,0],0.05*input.axis(262,263)))
-    if(input.down('z') and !jump_pressed)
+    velocity = p.add3(velocity,p.mul3([0,0,1],0.05*Input.axis(264,265)))
+    velocity = p.add3(velocity,p.mul3([1,0,0],0.05*Input.axis(262,263)))
+    if(Input.down('z') and !jump_pressed)
     {
         jump_pressed = true
         velocity[1] = 0.5
     }
-    if(input.up('z'))
+    if(Input.up('z'))
     {
         jump_pressed = false
     }
@@ -69,12 +71,15 @@ function editor_draw()
     for(var i in 1..prev_positions.len)
     {
         time += math.pi/16
-        debug.color([math.sin(time)/2+0.5,math.sin(time*2)/2+0.5,math.sin(time*4)/2+0.5])
-        debug.begin()
-        debug.line(prev_positions[i-1],prev_positions[i])
-        debug.end()
+        Debug.color([math.sin(time)/2+0.5,math.sin(time*2)/2+0.5,math.sin(time*4)/2+0.5])
+        Debug.begin()
+        Debug.line(prev_positions[i-1],prev_positions[i])
+        Debug.end()
     }
-    debug.begin()
-    debug.sphere(position,0.25)
-    debug.end()
+    Debug.begin()
+    Debug.sphere(position,0.25)
+    Debug.end()
+    Entity.set_property(Entity.self(),"FOV",Entity.get_property(Entity.self(),"FOV")+Input.axis('X','C')*0.5)
+    print(Entity.get_property(Entity.self(),"FOV"))
+    p.close()
 }

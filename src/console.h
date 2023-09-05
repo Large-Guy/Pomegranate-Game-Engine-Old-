@@ -4,6 +4,7 @@
 #include"imgui.h"
 #include"editor_window.h"
 #include"string"
+#include"sstream"
 #include"tea.hpp"
 #include"vector"
 
@@ -11,7 +12,7 @@ class Console : public EditorWindow
 {
 public:
     Console();
-    static std::vector<std::string> output;
+    static std::ostringstream output;
     static void print(std::string v);
     static void teascript_print(TeaState* T);
     static void clear();
