@@ -76,6 +76,10 @@ void Inspector::display_color(glm::vec4* v)
 {
     float c[4] = {v->x,v->y,v->z,v->w};
     ImGui::ColorPicker4("COLOR",c);
+    v->x = c[0];
+    v->y = c[1];
+    v->z = c[2];
+    v->w = c[3];
     ImGui::PopID();
 }
 void Inspector::draw()

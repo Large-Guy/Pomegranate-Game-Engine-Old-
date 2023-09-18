@@ -48,7 +48,7 @@ MeshRenderer::MeshRenderer(aiMesh* mesh, Material* material, std::string name)
 {
     this->name = name;
     this->mesh = mesh;
-    this->color = Color();
+    this->color = glm::vec4(1.0,1.0,1.0,1.0);
 
     //Get vertices and normals
     std::vector<float> verts = std::vector<float>();
@@ -121,7 +121,7 @@ void MeshRenderer::draw(float delta)
     set_shader_matrix4_value(material->GL_shader_id, "Projection", projection);
     set_shader_matrix4_value(material->GL_shader_id, "View", Camera3d::current->get_view_matrix());
     set_shader_matrix4_value(material->GL_shader_id, "Model", get_model_matrix());
-    set_shader_vector4_value(material->GL_shader_id, "Color", glm::vec4(color.data[0],color.data[1],color.data[2],color.data[3]));
+    set_shader_vector4_value(material->GL_shader_id, "Color", color);
     
     //Draw
     glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized

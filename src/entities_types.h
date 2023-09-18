@@ -37,7 +37,7 @@ public:
     std::string material_asset_path;
     aiMesh* mesh;
     Material* material;
-    Color color;
+    glm::vec4 color;
     unsigned int EBO;
     unsigned int VAO;
     unsigned int VBO;

@@ -129,7 +129,7 @@ int main(int, char **)
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
-    ImFont* main_font = io.Fonts->AddFontFromFileTTF("../res/fonts/default.ttf",20);
+    ImFont* main_font = io.Fonts->AddFontFromFileTTF("../res/fonts/default.ttf",16);
     io.FontDefault = main_font;
     io.ConfigWindowsMoveFromTitleBarOnly = true;
     dark_editor_style();
