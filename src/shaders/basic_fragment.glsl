@@ -11,10 +11,10 @@ uniform vec4 Color;
 
 void main()
 {
-    vec3 l = normalize(vec3(0.0,1.0,0.0));
+    vec3 l = normalize(vec3(0.5,1.0,0.5));
     vec3 nor = normalize(normal);
     vec3 col = vec3(Color.x,Color.y,Color.z);
-    float cosTheta = clamp(dot(nor,l),0.0,1.0)+0.75;
+    float cosTheta = clamp(dot(nor,l),0.0,1.0)*0.75+0.25;
     col = col*cosTheta;
-    screenColor = vec4(col.x,col.y,col.z,1.0f);  
+    screenColor = vec4(col.x,col.y,col.z,Color.w);  
 }

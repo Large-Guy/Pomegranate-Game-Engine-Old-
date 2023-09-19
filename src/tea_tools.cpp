@@ -80,3 +80,39 @@ void tea_tools_push_vec2(TeaState* T,glm::vec2 v)
     tea_push_number(T,(double)v.y);
     tea_add_item(T,-2);
 }
+bool tea_tools_is_vec4(TeaState* T,int i)
+{
+    if(tea_is_list(T, i))
+    {
+        int len = tea_len(T,i);
+        if(len == 4)
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
+bool tea_tools_is_vec3(TeaState* T,int i)
+{
+    if(tea_is_list(T, i))
+    {
+        int len = tea_len(T,i);
+        if(len == 3)
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
+bool tea_tools_is_vec2(TeaState* T,int i)
+{
+    if(tea_is_list(T, i))
+    {
+        int len = tea_len(T,i);
+        if(len == 2)
+        {
+            return 1;
+        }
+    }
+    return 0;
+}

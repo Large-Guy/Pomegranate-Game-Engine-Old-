@@ -41,7 +41,7 @@ private:
     static int NODE_ID;
 public:
     static Entity* current;
-    static std::vector<std::shared_ptr<Entity>> entities;
+    static std::vector<Entity*> entities;
     std::vector<EntityProperty> properties;
     std::string name;
     int ID;
@@ -65,8 +65,8 @@ public:
     virtual void editor_draw(float delta);
     void entity_set_current();
     glm::mat4 get_model_matrix(int i = -1);
-    static std::shared_ptr<Entity> get_entity(std::string name);
-    static std::shared_ptr<Entity> get_entity(int id);
+    static Entity* get_entity(std::string name);
+    static Entity* get_entity(int id);
 };
 
 //Teascript

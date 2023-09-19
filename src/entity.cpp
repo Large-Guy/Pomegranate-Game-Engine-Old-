@@ -3,7 +3,7 @@
 //Variables
 int Entity::NODE_ID = 0;
 Entity* Entity::current = nullptr;
-std::vector<std::shared_ptr<Entity>> Entity::entities = std::vector<std::shared_ptr<Entity>>();
+std::vector<Entity*> Entity::entities;
 
 //Functions
 EntityProperty::EntityProperty(std::string name, unsigned int type, void* value)
@@ -23,9 +23,7 @@ Entity::Entity(glm::vec3 position, glm::vec3 scale, glm::vec3 rotation)
     this->parent = nullptr;
     this->model_matrix = glm::mat4(1.0f);
     this->ID = Entity::NODE_ID++;
-    std::cout << "Pushed me" << std::endl;
-    Entity::entities.push_back(std::make_shared<Entity>(*this));
-    std::cout << entities.size() << std::endl;
+    Entity::entities.push_back(this);
     //Display base properties
     display_property("name",&this->name,PROPERTY_STRING);
     display_property("position",&this->position,PROPERTY_VECTOR3);
@@ -42,9 +40,7 @@ Entity::Entity()
     this->parent = nullptr;
     this->model_matrix = glm::mat4(1.0f);
     this->ID = Entity::NODE_ID++;
-    std::cout << "Pushed me" << std::endl;
-    Entity::entities.push_back(std::make_shared<Entity>(*this));
-    std::cout << entities.size() << std::endl;
+    Entity::entities.push_back(this);
     //Display base properties
     display_property("name",&this->name,PROPERTY_STRING);
     display_property("position",&this->position,PROPERTY_VECTOR3);
@@ -57,12 +53,10 @@ void Entity::display_property(std::string name, void* property, unsigned int typ
 }
 EntityProperty Entity::get_property(std::string name)
 {
-    std::cout << "finding property: " << name << std::endl;
     for (size_t i = 0; i < properties.size(); i++)
     {
         if(properties[i].name==name)
         {
-            std::cout << "Found property :)" << std::endl;
             return properties[i];
         }
     }
@@ -95,6 +89,21 @@ void Entity::set_property(std::string name,PropertyType t, void* v)
                     *(bool*)properties[i].value = *(bool*)v;
                     break;
                 }
+                case PROPERTY_VECTOR4:
+                {
+                    *(glm::vec4*)properties[i].value = *(glm::vec4*)v;
+                    break;
+                }
+                case PROPERTY_VECTOR3:
+                {
+                    *(glm::vec3*)properties[i].value = *(glm::vec3*)v;
+                    break;
+                }
+                case PROPERTY_VECTOR2:
+                {
+                    *(glm::vec2*)properties[i].value = *(glm::vec2*)v;
+                    break;
+                }
             }
             break;
         }
@@ -122,12 +131,10 @@ void Entity::entity_set_current()
 {
     Entity::current = this;
 }
-std::shared_ptr<Entity> Entity::get_entity(std::string name)
+Entity* Entity::get_entity(std::string name)
 {
-    std::cout << "Finding Entity, Total: " << Entity::entities.size() << " Searching: " << std::endl;
     for (int i = 0; i < Entity::entities.size(); i++)
     {
-        std::cout << Entity::entities[i]->ID << std::endl;
         if(Entity::entities[i]->name == name)
         {
             return Entity::entities[i];
@@ -135,12 +142,10 @@ std::shared_ptr<Entity> Entity::get_entity(std::string name)
     }
     return nullptr;
 }
-std::shared_ptr<Entity> Entity::get_entity(int id)
+Entity* Entity::get_entity(int id)
 {
-    std::cout << "Finding Entity, Total: " << Entity::entities.size() << " Searching: " << std::endl;
     for (int i = 0; i < Entity::entities.size(); i++)
     {
-        std::cout << Entity::entities[i]->ID << std::endl;
         if(Entity::entities[i]->ID == id)
         {
             return Entity::entities[i];
@@ -180,10 +185,12 @@ void teascript_entity_get_property(TeaState*T)
     int entityID = tea_check_number(T,0);
     int len = 0;
     const char* name = tea_check_lstring(T,1,&len);
-    std::shared_ptr<Entity> e = Entity::get_entity(entityID);
+    Entity* e = Entity::get_entity(entityID);
     if(e==nullptr)
     {
-        std::cout << "NULL??!?" << std::endl;
+        std::cout << "Null property." << std::endl;
+        tea_push_null(T);
+        return;
     }
     EntityProperty t = e->get_property(name);
     void* v = t.value;
@@ -224,32 +231,50 @@ void teascript_entity_set_property(TeaState*T)
     int entityID = tea_check_number(T,0);
     int len = 0;
     const char* name = tea_check_lstring(T,1,&len);
-    if(tea_is_number(T,1))
+    if(tea_is_number(T,2))
     {
-        float n = tea_check_number(T,1);
+        float n = tea_check_number(T,2);
         Entity::get_entity(entityID)->set_property(name,PROPERTY_FLOAT,&n);
     }
-    else if(tea_is_bool(T,1))
+    else if(tea_is_bool(T,2))
     {
-        bool n = tea_check_bool(T,1);
+        bool n = tea_check_bool(T,2);
         Entity::get_entity(entityID)->set_property(name,PROPERTY_BOOL,&n);
     }
-    else if(tea_is_string(T,1))
+    else if(tea_is_string(T,2))
     {
         int len = 0;
-        std::string n = tea_check_lstring(T,1,&len);
+        std::string n = tea_check_lstring(T,2,&len);
         Entity::get_entity(entityID)->set_property(name,PROPERTY_STRING,&n);
+    }
+    else if(tea_tools_is_vec4(T,2))
+    {
+        int len = 0;
+        glm::vec4 n = tea_tools_check_vec4(T,2);
+        Entity::get_entity(entityID)->set_property(name,PROPERTY_VECTOR4,&n);
+    }
+    else if(tea_tools_is_vec3(T,2))
+    {
+        int len = 0;
+        glm::vec3 n = tea_tools_check_vec3(T,2);
+        Entity::get_entity(entityID)->set_property(name,PROPERTY_VECTOR3,&n);
+    }
+    else if(tea_tools_is_vec2(T,2))
+    {
+        int len = 0;
+        glm::vec2 n = tea_tools_check_vec2(T,2);
+        Entity::get_entity(entityID)->set_property(name,PROPERTY_VECTOR2,&n);
     }
     tea_push_null(T);
 }
 
 //Tea module
 const TeaModule TeaModule_entity[] = {
-    {"display_property",teascript_entity_display},
+    {"pub",teascript_entity_display},
     {"self",teascript_entity_self},
     {"find",teascript_entity_find},
-    {"get_property",teascript_entity_get_property},
-    {"set_property",teascript_entity_set_property},
+    {"get",teascript_entity_get_property},
+    {"set",teascript_entity_set_property},
     {NULL,NULL}
 };
 

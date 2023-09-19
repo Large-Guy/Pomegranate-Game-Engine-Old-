@@ -96,11 +96,13 @@ int main(int, char **)
     //create the Frame Buffer
     make_frame_buffer(512,512);
     //Engine
-
+    
     //Editor
-
+    
     //TODO: Add world loading
     World world = World();
+
+    Entity::entities.push_back(&Viewport::world_camera);
 
     //TODO: make asset manager load used assets
     AssetManager asset_manager = AssetManager();

@@ -4,82 +4,20 @@ import Debug
 import Input
 import Window
 import Entity
-import Pomegranate as p
+import Pomegranate as pom
 
-
-var position = [0.0,0.0,0.0]
-var velocity = [0.0,0.0,0.0]
 
 var time = 0.0
 
-var prev_positions = []
-var max_positions = 25
-prev_positions.add(position)
-var jump_pressed = true
-
-var is_checkbox_checked = false
-
 function editor_window()
 {
-    Window.open("Trail Window")
-    is_checkbox_checked = Window.checkbox("View Options", is_checkbox_checked)
-    if(is_checkbox_checked)
-    {
-        if(Window.button("Increase position count"))
-        {
-            max_positions += 25
-        }
-        if(Window.button("Decrease position count"))
-        {
-            max_positions -= 25
-        }
-    }
-    Window.close()
+    
 }
 
 function editor_draw()
 {
-    velocity = p.add3(velocity,p.mul3([0,0,1],0.05*Input.axis(264,265)))
-    velocity = p.add3(velocity,p.mul3([1,0,0],0.05*Input.axis(262,263)))
-    if(Input.down('z') and !jump_pressed)
-    {
-        jump_pressed = true
-        velocity[1] = 0.5
-    }
-    if(Input.up('z'))
-    {
-        jump_pressed = false
-    }
-    velocity[1] -= 0.02
-    velocity[0] = velocity[0]*0.9
-    velocity[2] = velocity[2]*0.9
-    position = p.add3(position,velocity)
-    if(position[1] < 1.0)
-    {
-        velocity[1] = 0.0
-        position[1] = 1.0
-    }
-    if(p.dist3(position,prev_positions[prev_positions.len-1]) > 0.1)
-    {
-        prev_positions.add(position)
-    }
-    if(prev_positions.len > max_positions)
-    {
-        prev_positions.remove(prev_positions[0])
-    }
-    time = 0.0
-    for(var i in 1..prev_positions.len)
-    {
-        time += math.pi/16
-        Debug.color([math.sin(time)/2+0.5,math.sin(time*2)/2+0.5,math.sin(time*4)/2+0.5])
-        Debug.begin()
-        Debug.line(prev_positions[i-1],prev_positions[i])
-        Debug.end()
-    }
-    Debug.begin()
-    Debug.sphere(position,0.25)
-    Debug.end()
-    //Entity.set_property(Entity.self(),"FOV",Entity.get_property(Entity.self(),"FOV")+Input.axis('X','C')*0.5)
-    //print(Entity.get_property(Entity.self(),"FOV"))
-    //p.close()
+    time += 0.0166
+    var p = [math.sin(time)*10.0,2.0,math.cos(time)*10.0]
+    Entity.set(Entity.self(),"position",p)
+    Entity.set(Entity.self(),"rotation",pom.add3(Entity.get(Entity.self(),"rotation"),[0,-0.01666,0]))
 }
