@@ -14,6 +14,7 @@
 #include"iostream"
 #include"shaders.h"
 #include"windows.h"
+#include "gtx/quaternion.hpp"
 
 class Camera3d : public Entity
 {

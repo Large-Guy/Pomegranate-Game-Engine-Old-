@@ -17,7 +17,7 @@ function editor_window()
 function editor_draw()
 {
     time += 0.0166
-    var p = [math.sin(time)*10.0,2.0,math.cos(time)*10.0]
+    var p = [math.sin(time)*10.0,5.0,math.cos(time)*10.0]
     Entity.set(Entity.self(),"position",p)
-    Entity.set(Entity.self(),"rotation",pom.add3(Entity.get(Entity.self(),"rotation"),[0,-0.01666,0]))
+    Entity.set(Entity.self(),"rotation",[0.0,-time,0])
 }

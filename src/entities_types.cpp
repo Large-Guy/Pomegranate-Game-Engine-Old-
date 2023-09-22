@@ -29,9 +29,7 @@ glm::mat4 Camera3d::get_perspective_matrix(int w, int h)
 }
 glm::mat4 Camera3d::get_view_matrix()
 {
-    glm::vec3 forward = glm::vec3(0, 0, -1.0f)*(glm::quat(rotation));
-    glm::vec3 cameraTarget = position + forward;
-    return glm::lookAt(position, cameraTarget, glm::vec3(0,1.0f,0));
+    return glm::translate(glm::toMat4(glm::quat(rotation)),-position);
 }
 void Camera3d::editor_draw(float delta)
 {
