@@ -1,17 +1,19 @@
-#ifndef DEBUG_H
-#define DEBUG_H
+#pragma once
 
-#include"shaders.h"
-#include"vector"
-#include"glm.hpp"
-#include"ext.hpp"
-#include"tea.hpp"
-#include"entities_types.h"
-#include"GLFW/glfw3.h"
-#include"../lib/glad/glad.h"
-#include"windows.h"
-#include"console.h"
-#include"tea_tools.h"
+#include <vector>
+
+#include "../lib/glad/glad.h"
+#include "GLFW/glfw3.h"
+
+#include "glm.hpp"
+#include "ext.hpp"
+#include "tea.hpp"
+
+#include "shaders.h"
+#include "entities_types.h"
+#include "windows.h"
+#include "console.h"
+#include "tea_tools.h"
 
 //Variables
 extern Material debug_material;
@@ -31,5 +33,3 @@ void debug_end_frame();
 void TeaModule_add_debug(TeaState* T);
 void debug_draw_point_tea(TeaState*T);
 void debug_draw_point(glm::vec3 a);
-
-#endif

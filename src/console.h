@@ -1,12 +1,14 @@
-#ifndef CONSOLE_H
-#define CONSOLE_H
+#pragma once
 
-#include"imgui.h"
-#include"editor_window.h"
-#include"string"
-#include"sstream"
-#include"tea.hpp"
-#include"vector"
+#include <sstream>
+#include <string>
+#include <vector>
+
+#include <imgui.h>
+
+#include "tea.hpp"
+
+#include "editor_window.h"
 
 class Console : public EditorWindow
 {
@@ -19,5 +21,3 @@ public:
     static void teascript_clear(TeaState* T);
     void draw() override;
 };
-
-#endif

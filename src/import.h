@@ -1,12 +1,12 @@
-#ifndef IMPORT_H
-#define IMPORT_H
+#pragma once
 
-#include"string"
-#include"vector"
+#include <string>
+#include <vector>
+#include <memory>
+
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-#include<memory>
 
 //Broken class, needs fixing
 class AssetManager
@@ -21,5 +21,3 @@ public:
     void load_audio(std::string path, std::string name);
     const void* get_asset(std::string name);
 };
-
-#endif

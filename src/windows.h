@@ -1,9 +1,9 @@
-#ifndef WINDOWS_H
-#define WINDOWS_H
+#pragma once
 
-#include"GLFW/glfw3.h"
-#include"../lib/glad/glad.h"
-#include"iostream"
+#include <iostream>
+
+#include "GLFW/glfw3.h"
+#include "../lib/glad/glad.h"
 
 //Variables
 extern unsigned int* frameBufferData;
@@ -14,5 +14,3 @@ extern GLFWwindow* window;
 //Functions
 GLFWwindow* OpenWindow(int width, int height, const char* Name);
 void make_frame_buffer(int w, int h);
-
-#endif

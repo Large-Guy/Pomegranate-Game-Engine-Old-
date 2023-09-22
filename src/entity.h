@@ -1,14 +1,15 @@
-#ifndef ENTITY_H
-#define ENTITY_H
+#pragma once
 
-#include"tea.hpp"
-#include"tea_tools.h"
-#include"glm.hpp"
+#include <map>
+#include <vector>
+#include <string>
+#include <memory>
+
+#include "tea.hpp"
+#include "glm.hpp"
 #include "ext.hpp"
-#include"map"
-#include"vector"
-#include"string"
-#include"memory"
+
+#include "tea_tools.h"
 
 extern const TeaModule TeaModule_entity[];
 
@@ -78,5 +79,3 @@ void teascript_entity_find(TeaState*T);
 void teascript_entity_get_property(TeaState*T);
 void teascript_entity_set_property(TeaState*T);
 void TeaModule_add_entity(TeaState* T);
-
-#endif

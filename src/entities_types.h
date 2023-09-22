@@ -1,19 +1,22 @@
-#ifndef ENTITIES_TYPES
-#define ENTITIES_TYPES
-#include"entity.h"
-#include"vector"
-#include"string"
-#include"glm.hpp"
-#include"ext.hpp"
+#pragma once
+
+#include <iostream>
+#include <vector>
+#include <string>
+
 #include "../lib/glad/glad.h"
-#include"GLFW/glfw3.h"
-#include"material.h"
-#include"color.h"
-#include"scene.h"
-#include"debug.h"
-#include"iostream"
-#include"shaders.h"
-#include"windows.h"
+#include "GLFW/glfw3.h"
+
+#include "glm.hpp"
+#include "ext.hpp"
+
+#include "entity.h"
+#include "material.h"
+#include "color.h"
+#include "scene.h"
+#include "debug.h"
+#include "shaders.h"
+#include "windows.h"
 #include "gtx/quaternion.hpp"
 
 class Camera3d : public Entity
@@ -47,5 +50,3 @@ public:
     MeshRenderer(aiMesh* mesh, Material* material, std::string name);
     void draw(float delta);
 };
-
-#endif

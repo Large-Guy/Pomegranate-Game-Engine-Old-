@@ -1,15 +1,16 @@
-#ifndef SHADERS_H
-#define SHADERS_H
+#pragma once
 
-#include"string"
+#include <iostream>
+#include <sstream>
+#include <fstream>
+#include <string>
+#include <vector>
+
 #include "../lib/glad/glad.h"
-#include"GLFW/glfw3.h"
-#include"glm.hpp"
-#include"ext.hpp"
-#include "sstream"
-#include"fstream"
-#include"vector"
-#include"iostream"
+#include "GLFW/glfw3.h"
+
+#include "glm.hpp"
+#include "ext.hpp"
 
 //Functions
 unsigned int make_module(const std::string& filepath, unsigned int module_type);
@@ -24,5 +25,3 @@ public:
     Material(std::string shader_path);
     Material();
 };
-
-#endif

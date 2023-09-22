@@ -1,27 +1,26 @@
 //Include everything
 
-//Imgui
-#include<imgui.h>
-#include<backends/imgui_impl_glfw.h>
-#include<backends/imgui_impl_opengl3.h>
-#include<misc/cpp/imgui_stdlib.h>
-
-#include"editor_styles.h"
-
 #include <iostream>
-#include "../lib/glad/glad.h"
-#include <GLFW/glfw3.h>
-#include <stdio.h>
-#include <math.h>
-
 #include <fstream>
 #include <sstream>
 #include <string>
 #include <vector>
-#include<tuple>
+#include <tuple>
 #include <map>
-#include<memory>
+#include <memory>
+#include <stdio.h>
+#include <math.h>
 
+//Imgui
+#include <imgui.h>
+#include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_opengl3.h>
+#include <misc/cpp/imgui_stdlib.h>
+
+#include "editor_styles.h"
+
+#include "../lib/glad/glad.h"
+#include <GLFW/glfw3.h>
 
 #include "glm.hpp"
 #include "ext.hpp"
@@ -34,30 +33,30 @@
 #include "import.h"
 #include "shaders.h"
 #include "windows.h"
-#include"color.h"
-#include"input.h"
+#include "color.h"
+#include "input.h"
 
 //teascript
-#include"tea.hpp"
-#include"tea_tools.h"
-#include"pomegranate_lib.h"
+#include "tea.hpp"
+#include "tea_tools.h"
+#include "pomegranate_lib.h"
 
 //Entities
 #include "entity.h"
 //Debug
 #include "entities_types.h"
-#include"debug.h"
+#include "debug.h"
 
 //Worlds
 #include "world.h"
 
 //Editor windows
-#include"editor_window.h"
-#include"hierarchy.h"
-#include"inspector.h"
-#include"viewport.h"
-#include"console.h"
-#include"world_edit.h"
+#include "editor_window.h"
+#include "hierarchy.h"
+#include "inspector.h"
+#include "viewport.h"
+#include "console.h"
+#include "world_edit.h"
 
 //TODO: Make game_time into class
 double game_time = 0.0;
@@ -150,10 +149,10 @@ int main(int, char **)
     TeaModule_add_pomegranate(T_Main);
     
     //Get functions
+    tea_push_null(T_Main);
     tea_set_global(T_Main,"editor_draw");
     tea_push_null(T_Main);
     tea_set_global(T_Main,"editor_window");
-    tea_push_null(T_Main);
     std::string Teascript_Main = readFileToString("../res/scripts/main.tea");
     //Interpret
     tea_interpret(T_Main,"",Teascript_Main.c_str());
