@@ -29,11 +29,13 @@ glm::mat4 Camera3d::get_perspective_matrix(int w, int h)
 }
 glm::mat4 Camera3d::get_view_matrix()
 {
-    return glm::translate(glm::toMat4(glm::quat(rotation)),-position);
+    //return glm::translate(glm::toMat4(glm::quat(rotation)),-position);
+    return glm::lookAt(position,position + glm::vec3(0.0f,0.0f,-1.0f)*glm::quat(rotation),glm::vec3(0.0f,1.0f,0.0f));
 }
-void Camera3d::editor_draw(float delta)
+void Camera3d::draw(float delta)
 {
     glm::vec3 forward = glm::vec3(0, 0, -1.0f)*glm::quat(rotation);
+    debug_color = glm::vec3(1.0f,1.0f,1.0f);
     debug_begin_frame();
     debug_draw_line(position,position + forward);
     debug_end_frame();

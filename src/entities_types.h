@@ -31,7 +31,7 @@ public:
     void set_current();
     glm::mat4 get_perspective_matrix(int w, int h);
     glm::mat4 get_view_matrix();
-    void editor_draw(float delta);
+    void draw(float delta);
 };
 
 class MeshRenderer : public Entity
