@@ -1,12 +1,13 @@
-#ifndef POMEGRANATE_LIB
-#define POMEGRANATE_LIB
+#pragma once
 
-#include"tea.hpp"
-#include"iostream"
-#include"glm.hpp"
-#include"ext.hpp"
-#include"tea_tools.h"
-#include"windows.h"
+#include <iostream>
+
+#include "tea.hpp"
+#include "glm.hpp"
+#include "ext.hpp"
+
+#include "tea_tools.h"
+#include "windows.h"
 
 //Variables
 extern const TeaModule TeaModule_pomegranate[];
@@ -46,5 +47,3 @@ void teascript_vec2_nor(TeaState* T);
 void teascript_editor_close(TeaState*T);
 
 void TeaModule_add_pomegranate(TeaState* T);
-
-#endif

@@ -1,11 +1,11 @@
-#ifndef WORLD_H
-#define WORLD_H
+#pragma once
 
-#include"vector"
-#include"memory"
-#include"string"
-#include"entity.h"
-#include"iostream"
+#include <iostream>
+#include <vector>
+#include <memory>
+#include <string>
+
+#include "entity.h"
 
 class World
 {
@@ -22,4 +22,3 @@ public:
     void update(int render_layers);
     void draw(int render_layers);
 };
-#endif

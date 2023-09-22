@@ -1,12 +1,13 @@
-#ifndef HIERARCHY_H
-#define HIERARCHY_H
+#pragma once
 
-#include"memory"
-#include"editor_window.h"
-#include"entity.h"
-#include"imgui.h"
-#include<misc/cpp/imgui_stdlib.h>
-#include"world.h"
+#include <memory>
+
+#include <imgui.h>
+#include <misc/cpp/imgui_stdlib.h>
+
+#include "world.h"
+#include "entity.h"
+#include "editor_window.h"
 
 class Hierarchy : public EditorWindow
 {
@@ -21,5 +22,3 @@ public:
     void update() override;
     void draw() override;
 };
-
-#endif

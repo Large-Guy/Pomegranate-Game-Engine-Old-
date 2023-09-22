@@ -1,10 +1,9 @@
-#ifndef EDITOR_STYLES_H
-#define EDITOR_STYLES_H
+#pragma once
 
-#include<imgui.h>
-#include<backends/imgui_impl_glfw.h>
-#include<backends/imgui_impl_opengl3.h>
-#include<misc/cpp/imgui_stdlib.h>
+#include <imgui.h>
+#include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_opengl3.h>
+#include <misc/cpp/imgui_stdlib.h>
 
 //Functions
 void dark_editor_style()
@@ -88,5 +87,3 @@ void dark_editor_style()
     
     style.Colors[ImGuiCol_ModalWindowDimBg]       = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
 }
-
-#endif

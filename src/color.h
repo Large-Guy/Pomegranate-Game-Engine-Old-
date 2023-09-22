@@ -1,7 +1,6 @@
-#ifndef COLOR_H
-#define COLOR_H
+#pragma once
 
-#include"stdlib.h"
+#include <stdlib.h>
 
 //TODO: Color needs rework.
 struct Color
@@ -11,5 +10,3 @@ public:
     Color(float r, float g, float b, float a = 1.0f);
     Color();
 };
-
-#endif

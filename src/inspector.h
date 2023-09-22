@@ -1,13 +1,15 @@
-#ifndef INSPECTOR_H
-#define INSPECTOR_H
+#pragma once
 
-#include"editor_window.h"
-#include"glm.hpp"
-#include"ext.hpp"
-#include"string"
-#include"color.h"
-#include"hierarchy.h"
-#include"imgui.h"
+#include <string>
+
+#include <imgui.h>
+
+#include "glm.hpp"
+#include "ext.hpp"
+
+#include "editor_window.h"
+#include "color.h"
+#include "hierarchy.h"
 
 class Inspector : public EditorWindow
 {
@@ -26,5 +28,3 @@ public:
     void display_bool(bool*v);
     void draw() override;
 };
-
-#endif
