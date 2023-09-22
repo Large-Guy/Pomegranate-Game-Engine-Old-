@@ -44,4 +44,6 @@ src/input.cpp
 src/pomegranate_lib.cpp
 )
 
+set_target_properties(Pomegranate_Engine PROPERTIES RUNTIME_OUTPUT_DIRECTORY "build/")
+
 target_link_libraries(Pomegranate_Engine glfw OpenGL::GL assimp libtea.so)
