@@ -105,14 +105,14 @@ int main(int, char **)
 
     //TODO: make asset manager load used assets
     AssetManager asset_manager = AssetManager();
-    asset_manager.load_model("../res/models/Cube.fbx", "mesh_cube", aiProcess_Triangulate | aiProcess_FlipUVs);
-    asset_manager.load_model("../res/models/Sphere.fbx", "mesh_sphere", aiProcess_Triangulate | aiProcess_FlipUVs);
-    asset_manager.load_model("../res/models/Cylinder.fbx", "mesh_cylinder", aiProcess_Triangulate | aiProcess_FlipUVs);
-    asset_manager.load_model("../res/models/Torus.fbx", "mesh_torus", aiProcess_Triangulate | aiProcess_FlipUVs);
+    asset_manager.load_model("res/models/Cube.fbx", "mesh_cube", aiProcess_Triangulate | aiProcess_FlipUVs);
+    asset_manager.load_model("res/models/Sphere.fbx", "mesh_sphere", aiProcess_Triangulate | aiProcess_FlipUVs);
+    asset_manager.load_model("res/models/Cylinder.fbx", "mesh_cylinder", aiProcess_Triangulate | aiProcess_FlipUVs);
+    asset_manager.load_model("res/models/Torus.fbx", "mesh_torus", aiProcess_Triangulate | aiProcess_FlipUVs);
 
     //Init basic material TODO: Load materials with asset_manager
-    Material mat = Material("../src/shaders/basic");
-    debug_material = Material("../src/shaders/debug");
+    Material mat = Material("res/shaders/basic");
+    debug_material = Material("res/shaders/debug");
 
     //Windows
     std::vector<std::shared_ptr<EditorWindow>> Windows = std::vector<std::shared_ptr<EditorWindow>>();
@@ -130,7 +130,7 @@ int main(int, char **)
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
-    ImFont* main_font = io.Fonts->AddFontFromFileTTF("../res/fonts/default.ttf",16);
+    ImFont* main_font = io.Fonts->AddFontFromFileTTF("res/fonts/default.ttf",16);
     io.FontDefault = main_font;
     io.ConfigWindowsMoveFromTitleBarOnly = true;
     dark_editor_style();
@@ -157,7 +157,7 @@ int main(int, char **)
     tea_set_global(T_Main,"draw");
     tea_push_null(T_Main);
     tea_set_global(T_Main,"update");
-    std::string Teascript_Main = readFileToString("../res/scripts/main.tea");
+    std::string Teascript_Main = readFileToString("res/scripts/main.tea");
     //Interpret
     tea_interpret(T_Main,"",Teascript_Main.c_str());
     //Editor loop
@@ -205,9 +205,9 @@ int main(int, char **)
         try
         {
             Viewport::world_camera.entity_set_current();
-            if(Teascript_Main != readFileToString("../res/scripts/main.tea"))
+            if(Teascript_Main != readFileToString("res/scripts/main.tea"))
             {
-                Teascript_Main = readFileToString("../res/scripts/main.tea");
+                Teascript_Main = readFileToString("res/scripts/main.tea");
                 tea_close(T_Main);
                 T_Main = tea_open();
                 //Add modules

@@ -6,6 +6,8 @@ include_directories("lib/assimp/" "lib/imgui/" "lib/glm/" "lib/tea/")
 
 link_directories("lib/tea/")
 
+file(COPY ${CMAKE_SOURCE_DIR}/res DESTINATION ${CMAKE_BINARY_DIR})
+
 find_package(OpenGL REQUIRED)
 find_package(assimp REQUIRED)
 add_definitions(-DGLFW_INCLUDE_NONE)
