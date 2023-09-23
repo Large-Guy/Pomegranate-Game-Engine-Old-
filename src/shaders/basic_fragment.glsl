@@ -7,7 +7,7 @@ out vec4 screenColor;
 
 uniform vec4 Color;
 
-uniform float shininess = 50.0;
+uniform float shininess = 10.0;
 
 void main()
 {
