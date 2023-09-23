@@ -54,6 +54,14 @@ void Inspector::display_bool(bool*v)
     ImGui::PopItemWidth();
     ImGui::PopID();
 }
+void Inspector::display_multiline(std::string*v)
+{
+    ImGui::PushItemWidth(ImGui::GetWindowWidth()-32);
+    ImGui::Text("STRING");
+    ImGui::InputTextMultiline("", v);
+    ImGui::PopItemWidth();
+    ImGui::PopID();
+}
 void Inspector::display_string(std::string*v)
 {
     ImGui::PushItemWidth(120);
@@ -113,6 +121,12 @@ void Inspector::draw()
                 {
                     std::string* v = (std::string*)Hierarchy::selected_entity->properties[i].value;
                     display_string(v);
+                    break;
+                }
+                case PROPERTY_MULTILINE: 
+                {
+                    std::string* v = (std::string*)Hierarchy::selected_entity->properties[i].value;
+                    display_multiline(v);
                     break;
                 }
                 case PROPERTY_ASSET: 

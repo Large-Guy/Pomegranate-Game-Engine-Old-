@@ -152,7 +152,11 @@ int main(int, char **)
     tea_push_null(T_Main);
     tea_set_global(T_Main,"editor_draw");
     tea_push_null(T_Main);
-    tea_set_global(T_Main,"editor_window");
+    tea_set_global(T_Main,"editor_update");
+    tea_push_null(T_Main);
+    tea_set_global(T_Main,"draw");
+    tea_push_null(T_Main);
+    tea_set_global(T_Main,"update");
     std::string Teascript_Main = readFileToString("../res/scripts/main.tea");
     //Interpret
     tea_interpret(T_Main,"",Teascript_Main.c_str());
@@ -196,6 +200,7 @@ int main(int, char **)
 
         //TODO: Implement proper world system
         world.set_current();
+        world.update(INT_MAX);
         world.draw(INT_MAX);
         try
         {
@@ -212,15 +217,19 @@ int main(int, char **)
                 TeaModule_add_entity(T_Main);
                 TeaModule_add_pomegranate(T_Main);
                 //Get functions
+                tea_push_null(T_Main);
                 tea_set_global(T_Main,"editor_draw");
                 tea_push_null(T_Main);
-                tea_set_global(T_Main,"editor_window");
+                tea_set_global(T_Main,"editor_update");
                 tea_push_null(T_Main);
+                tea_set_global(T_Main,"draw");
+                tea_push_null(T_Main);
+                tea_set_global(T_Main,"update");
                 tea_interpret(T_Main,"",Teascript_Main.c_str());
             }
             //Call the T_MAIN editor draw function
-            tea_get_global(T_Main,"editor_draw");
-            tea_call(T_Main,0);
+            if(tea_get_global(T_Main,"editor_draw"))
+                tea_call(T_Main,0);
         }
         catch(const std::exception& e)
         {
@@ -253,14 +262,22 @@ int main(int, char **)
         try
         {
             //Call the T_MAIN editor window function
-            tea_get_global(T_Main,"editor_window");
+            if(tea_get_global(T_Main,"editor_update"))
             tea_call(T_Main,0);
         }
         catch(const std::exception& e)
         {
             std::cout << e.what() << '\n';
         }
-        
+        if(glfwGetMouseButton(window,GLFW_MOUSE_BUTTON_RIGHT)==GLFW_PRESS)
+        {
+            ImGui::OpenPopup("Quick Actions");
+        }
+        if(ImGui::BeginPopup("Quick Actions"))
+        {
+            editor_new_entity(&asset_manager,&mat,World::current);
+            ImGui::EndPopup();
+        }
 
         if(ImGui::BeginMainMenuBar())
         {
@@ -320,7 +337,7 @@ int main(int, char **)
 
            ImGui::EndMainMenuBar();
         }
-
+        
         //Render ImGUI
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

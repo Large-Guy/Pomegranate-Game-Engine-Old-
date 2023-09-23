@@ -70,10 +70,16 @@ void World::update(int render_layers)
         {
             entities[i]->entity_set_current();
             entities[i]->update(0.016f);
+            
+            //Editor
+            entities[i]->editor_update(0.016f);
+            
             for(long unsigned int z = 0; z < entities[i]->children.size(); z++)
             {
                 entities[i]->children[z]->entity_set_current();
                 entities[i]->children[z]->update(0.016f);
+                //Editor
+                entities[i]->editor_update(0.016f);
             }
         }
     }
@@ -86,10 +92,15 @@ void World::draw(int render_layers)
         {
             entities[i]->entity_set_current();
             entities[i]->draw(0.016f);
+            
+            //editor
+            entities[i]->editor_draw(0.016f);
             for(long unsigned int z = 0; z < entities[i]->children.size(); z++)
             {
                 entities[i]->children[z]->entity_set_current();
                 entities[i]->children[z]->draw(0.016f);
+                //editor
+                entities[i]->editor_draw(0.016f);
             }
         }
     }

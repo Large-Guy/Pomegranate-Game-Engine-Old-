@@ -127,3 +127,96 @@ void MeshRenderer::draw(float delta)
     glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
     glDrawElements(GL_TRIANGLES, IndicesCount, GL_UNSIGNED_INT, 0);
 }
+
+//ScriptableEntity
+
+//Functions
+ScriptableEntity::ScriptableEntity(std::string name,std::string script_src, std::string script_string)
+{
+    this->name = name;
+    this->script_src = script_src;
+    this->script_string = script_string;
+    display_property(script_src,&this->script_src,PROPERTY_STRING);
+    display_property(script_src,&this->script_string,PROPERTY_MULTILINE);
+    my_script_state = tea_open();
+    //Add modules
+    TeaModule_add_debug(my_script_state);
+    TeaModule_add_input(my_script_state);
+    TeaModule_add_window(my_script_state);
+    TeaModule_add_entity(my_script_state);
+    TeaModule_add_pomegranate(my_script_state);
+    
+    //Get functions
+    tea_push_null(my_script_state);
+    tea_set_global(my_script_state,"editor_draw");
+    tea_push_null(my_script_state);
+    tea_set_global(my_script_state,"editor_update");
+    tea_push_null(my_script_state);
+    tea_set_global(my_script_state,"draw");
+    tea_push_null(my_script_state);
+    tea_set_global(my_script_state,"update");
+}
+
+ScriptableEntity::~ScriptableEntity()
+{
+    tea_close(my_script_state);
+}
+
+void ScriptableEntity::update(float delta)
+{
+    tea_get_global(my_script_state,"update");
+    if(tea_is_function(my_script_state,0))
+        tea_call(my_script_state,0);
+}
+
+void ScriptableEntity::draw(float delta)
+{
+    tea_get_global(my_script_state,"draw");
+    if(tea_is_function(my_script_state,0))
+        tea_call(my_script_state,0);
+}
+
+
+void ScriptableEntity::editor_update(float delta)
+{
+    if(lst_src_script != script_string)
+    {
+        try
+        {
+            tea_close(my_script_state);
+            my_script_state = tea_open();
+            //Add modules
+            TeaModule_add_debug(my_script_state);
+            TeaModule_add_input(my_script_state);
+            TeaModule_add_window(my_script_state);
+            TeaModule_add_entity(my_script_state);
+            TeaModule_add_pomegranate(my_script_state);
+            
+            //Get functions
+            tea_push_null(my_script_state);
+            tea_set_global(my_script_state,"editor_draw");
+            tea_push_null(my_script_state);
+            tea_set_global(my_script_state,"editor_update");
+            tea_push_null(my_script_state);
+            tea_set_global(my_script_state,"draw");
+            tea_push_null(my_script_state);
+            tea_set_global(my_script_state,"update");
+            tea_interpret(my_script_state,"",script_string.c_str());
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+        lst_src_script = script_string;
+    }
+    tea_get_global(my_script_state,"editor_update");
+    if(tea_is_function(my_script_state,0))
+        tea_call(my_script_state,0);
+}
+
+void ScriptableEntity::editor_draw(float delta)
+{
+    tea_get_global(my_script_state,"editor_draw");
+    if(tea_is_function(my_script_state,0))
+        tea_call(my_script_state,0);
+}

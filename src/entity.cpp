@@ -84,6 +84,11 @@ void Entity::set_property(std::string name,PropertyType t, void* v)
                     *(std::string*)properties[i].value = *(std::string*)v;
                     break;
                 }
+                case PROPERTY_MULTILINE:
+                {
+                    *(std::string*)properties[i].value = *(std::string*)v;
+                    break;
+                }
                 case PROPERTY_BOOL:
                 {
                     *(bool*)properties[i].value = *(bool*)v;
@@ -156,6 +161,7 @@ Entity* Entity::get_entity(int id)
 //Virtuals
 void Entity::update(float delta){}
 void Entity::draw(float delta){} 
+void Entity::editor_update(float delta){}
 void Entity::editor_draw(float delta){}
 
 //Teascript

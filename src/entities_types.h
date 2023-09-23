@@ -10,8 +10,13 @@
 #include "glm.hpp"
 #include "ext.hpp"
 
+#include"tea.hpp"
+#include"tea_tools.h"
+
 #include "entity.h"
 #include "material.h"
+#include "input.h"
+#include "pomegranate_lib.h"
 #include "color.h"
 #include "scene.h"
 #include "debug.h"
@@ -49,4 +54,20 @@ public:
     unsigned int IndicesCount;
     MeshRenderer(aiMesh* mesh, Material* material, std::string name);
     void draw(float delta);
+};
+
+class ScriptableEntity: public Entity
+{
+private:
+    std::string lst_src_script;
+public:
+    std::string script_src;
+    std::string script_string;
+    TeaState* my_script_state;
+    ScriptableEntity(std::string name,std::string script_src, std::string script_string);
+    void update(float delta);
+    void draw(float delta);
+    void editor_draw(float delta);
+    void editor_update(float delta);
+    ~ScriptableEntity();
 };

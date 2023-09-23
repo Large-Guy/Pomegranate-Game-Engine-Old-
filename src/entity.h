@@ -25,6 +25,7 @@ enum PropertyType
     PROPERTY_ASSET = 8,
     PROPERTY_COLOR = 9,
     PROPERTY_BOOL = 10,
+    PROPERTY_MULTILINE = 11,
 };
 
 class EntityProperty
@@ -63,6 +64,7 @@ public:
     void add_child(std::shared_ptr<Entity> entity);
     virtual void update(float delta);
     virtual void draw(float delta);
+    virtual void editor_update(float delta);
     virtual void editor_draw(float delta);
     void entity_set_current();
     glm::mat4 get_model_matrix(int i = -1);

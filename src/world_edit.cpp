@@ -30,6 +30,11 @@ void editor_new_entity(AssetManager*asset_manager,Material* mat,World* world)
            std::shared_ptr<Camera3d> e = std::make_shared<Camera3d>(90.0f,"Camera3d");
             world->add_entity(e);
         }
+        if(ImGui::MenuItem("Scriptable Entity"))
+        {
+           std::shared_ptr<ScriptableEntity> e = std::make_shared<ScriptableEntity>("Script","","");
+            world->add_entity(e);
+        }
        
        ImGui::EndMenu();
     }
