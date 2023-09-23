@@ -1,4 +1,16 @@
-//TODO: Change this to be consistent with other H files
+#pragma once
+
+#include <imgui.h>
+#include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_opengl3.h>
+#include <misc/cpp/imgui_stdlib.h>
+
+#include "../lib/glad/glad.h"
+#include <GLFW/glfw3.h>
+
+#include"editor_window.h"
+#include"entities_types.h"
+
 class Viewport : public EditorWindow
 {
 public:
@@ -13,5 +25,3 @@ public:
     void draw();
     void update();
 };
-
-#include "viewport.cpp"

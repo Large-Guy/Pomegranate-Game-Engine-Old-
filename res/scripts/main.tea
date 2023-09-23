@@ -6,9 +6,6 @@ import Window
 import Entity
 import Pomegranate as pom
 
-
-var time = 0.0
-
 function update()
 {
 
@@ -26,8 +23,5 @@ function editor_update()
 
 function editor_draw()
 {
-    time += 0.0166
-    var p = [math.sin(time)*10.0,5.0,math.cos(time)*10.0]
-    Entity.set(Entity.self(),"position",p)
-    Entity.set(Entity.self(),"rotation",[0.0,-time,0])
+    
 }

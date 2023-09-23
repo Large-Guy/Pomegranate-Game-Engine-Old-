@@ -1,3 +1,5 @@
+#include"viewport.h"
+
 //Functions
 Viewport::Viewport(GLuint texture)
 {
@@ -16,7 +18,7 @@ void Viewport::draw()
         {
             glfwGetCursorPos(window,&editor_mouse_x,&editor_mouse_y);
             //Editor Update TODO: Move to its own script
-            float speed = 10.0f;
+            float speed = 15.0f;
             if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
             {
                 world_camera.position += glm::vec3(0,0,-1)*glm::quat(world_camera.rotation)*0.016f*speed;

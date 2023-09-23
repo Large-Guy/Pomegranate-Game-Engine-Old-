@@ -183,24 +183,6 @@ void ScriptableEntity::editor_update(float delta)
     {
         try
         {
-            tea_close(my_script_state);
-            my_script_state = tea_open();
-            //Add modules
-            TeaModule_add_debug(my_script_state);
-            TeaModule_add_input(my_script_state);
-            TeaModule_add_window(my_script_state);
-            TeaModule_add_entity(my_script_state);
-            TeaModule_add_pomegranate(my_script_state);
-            
-            //Get functions
-            tea_push_null(my_script_state);
-            tea_set_global(my_script_state,"editor_draw");
-            tea_push_null(my_script_state);
-            tea_set_global(my_script_state,"editor_update");
-            tea_push_null(my_script_state);
-            tea_set_global(my_script_state,"draw");
-            tea_push_null(my_script_state);
-            tea_set_global(my_script_state,"update");
             tea_interpret(my_script_state,"",script_string.c_str());
         }
         catch(const std::exception& e)

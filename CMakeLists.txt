@@ -29,6 +29,7 @@ src/main.cpp
 src/color.cpp
 src/entity.cpp
 src/hierarchy.cpp
+src/viewport.cpp
 src/editor_window.cpp
 src/world.cpp
 src/world_edit.cpp

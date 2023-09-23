@@ -82,6 +82,13 @@ std::string readFileToString(const std::string& file_path)
 
 int main(int, char **)
 {
+    char cwd[PATH_MAX];
+    if (getcwd(cwd, sizeof(cwd)) != NULL) {
+        printf("Current working dir: %s\n", cwd);
+    } else {
+        perror("getcwd() error");
+        return 1;
+    }
     //Init GLFW
     if (!glfwInit())
     {
