@@ -140,26 +140,6 @@ int main(int, char **)
     //TODO: add delta to GameTime class
     float delta = 0.016f;
 
-    TeaState* T_Main = tea_open();
-    //Add modules
-    TeaModule_add_debug(T_Main);
-    TeaModule_add_input(T_Main);
-    TeaModule_add_window(T_Main);
-    TeaModule_add_entity(T_Main);
-    TeaModule_add_pomegranate(T_Main);
-    
-    //Get functions
-    tea_push_null(T_Main);
-    tea_set_global(T_Main,"editor_draw");
-    tea_push_null(T_Main);
-    tea_set_global(T_Main,"editor_update");
-    tea_push_null(T_Main);
-    tea_set_global(T_Main,"draw");
-    tea_push_null(T_Main);
-    tea_set_global(T_Main,"update");
-    std::string Teascript_Main = readFileToString("res/scripts/main.tea");
-    //Interpret
-    tea_interpret(T_Main,"",Teascript_Main.c_str());
     //Editor loop
     while (!glfwWindowShouldClose(window))
     {
@@ -202,39 +182,6 @@ int main(int, char **)
         world.set_current();
         world.update(INT_MAX);
         world.draw(INT_MAX);
-        try
-        {
-            Viewport::world_camera.entity_set_current();
-            if(Teascript_Main != readFileToString("res/scripts/main.tea"))
-            {
-                Teascript_Main = readFileToString("res/scripts/main.tea");
-                tea_close(T_Main);
-                T_Main = tea_open();
-                //Add modules
-                TeaModule_add_debug(T_Main);
-                TeaModule_add_input(T_Main);
-                TeaModule_add_window(T_Main);
-                TeaModule_add_entity(T_Main);
-                TeaModule_add_pomegranate(T_Main);
-                //Get functions
-                tea_push_null(T_Main);
-                tea_set_global(T_Main,"editor_draw");
-                tea_push_null(T_Main);
-                tea_set_global(T_Main,"editor_update");
-                tea_push_null(T_Main);
-                tea_set_global(T_Main,"draw");
-                tea_push_null(T_Main);
-                tea_set_global(T_Main,"update");
-                tea_interpret(T_Main,"",Teascript_Main.c_str());
-            }
-            //Call the T_MAIN editor draw function
-            if(tea_get_global(T_Main,"editor_draw"))
-                tea_call(T_Main,0);
-        }
-        catch(const std::exception& e)
-        {
-            std::cout << e.what() << '\n';
-        }
         
         //TODO: Move editor UI to its own script
 
@@ -259,16 +206,6 @@ int main(int, char **)
             }
         }
         
-        try
-        {
-            //Call the T_MAIN editor window function
-            if(tea_get_global(T_Main,"editor_update"))
-            tea_call(T_Main,0);
-        }
-        catch(const std::exception& e)
-        {
-            std::cout << e.what() << '\n';
-        }
         if(glfwGetMouseButton(window,GLFW_MOUSE_BUTTON_RIGHT)==GLFW_PRESS)
         {
             ImGui::OpenPopup("Quick Actions");
@@ -346,8 +283,6 @@ int main(int, char **)
         glfwSwapBuffers(window);
         game_time += 0.02;
     }
-    //Close main
-    tea_close(T_Main);
     //Delete material programs
     glDeleteProgram(mat.GL_shader_id);
     glDeleteProgram(debug_material.GL_shader_id);

@@ -26,6 +26,7 @@ enum PropertyType
     PROPERTY_COLOR = 9,
     PROPERTY_BOOL = 10,
     PROPERTY_MULTILINE = 11,
+    PROPERTY_SCRIPT,
 };
 
 class EntityProperty

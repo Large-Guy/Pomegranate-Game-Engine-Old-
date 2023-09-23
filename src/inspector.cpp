@@ -1,7 +1,10 @@
 #include"inspector.h"
-
 //Functions
-Inspector::Inspector() : inspector_id(0){}
+Inspector::Inspector()
+{
+    inspector_id = 0;
+    fileDialog.SetTitle("File Browser");
+}
 void Inspector::display_vector4(glm::vec4*v)
 {
     ImGui::PushItemWidth(40);
@@ -58,7 +61,7 @@ void Inspector::display_multiline(std::string*v)
 {
     ImGui::PushItemWidth(ImGui::GetWindowWidth()-32);
     ImGui::Text("STRING");
-    ImGui::InputTextMultiline("", v);
+    ImGui::InputTextMultiline("", v,ImVec2(0,128));
     ImGui::PopItemWidth();
     ImGui::PopID();
 }
@@ -69,13 +72,45 @@ void Inspector::display_string(std::string*v)
     ImGui::PopItemWidth();
     ImGui::PopID();
 }
+std::string removeUpToScripts(const std::string& filePath)
+{
+    // Find the position of "scripts/" in the file path
+    size_t pos = filePath.find("scripts/");
+
+    // Check if "scripts/" was found
+    if (pos != std::string::npos)
+    {
+        // Return the substring starting from the position after "scripts/"
+        return filePath.substr(pos + 8); // 8 is the length of "scripts/"
+    }
+
+    // If "scripts/" was not found, return the original path
+    return filePath;
+}
 void Inspector::display_asset(std::string*v)
 {
     ImGui::PushItemWidth(120);
-    ImGui::InputText("STRING", v); ImGui::SameLine();
+    ImGui::InputText("SCRIPT", v); ImGui::SameLine();
     if(ImGui::Button("BROWSE"))
     {
         std::cout << "BROWSING" << std::endl;
+        fileDialog.SetTypeFilters({".mat",".obj",".fbx"});
+        fileDialog.Open();
+    }
+    ImGui::PopItemWidth();
+    ImGui::PopID();
+}
+void Inspector::display_script(std::string*v)
+{
+    ImGui::PushItemWidth(120);
+    ImGui::InputText("SCRIPT", v); ImGui::SameLine();
+    if(ImGui::Button("BROWSE"))
+    {
+        fileBrowserString = v;
+        std::cout << "BROWSING" << std::endl;
+        fileDialog.SetTypeFilters({".tea"});
+        
+        fileDialog.Open();
     }
     ImGui::PopItemWidth();
     ImGui::PopID();
@@ -135,6 +170,12 @@ void Inspector::draw()
                     display_asset(v);
                     break;
                 }
+                case PROPERTY_SCRIPT: 
+                {
+                    std::string* v = (std::string*)Hierarchy::selected_entity->properties[i].value;
+                    display_script(v);
+                    break;
+                }
                 case PROPERTY_VECTOR1: 
                 {
                     glm::vec1* v = (glm::vec1*)Hierarchy::selected_entity->properties[i].value;
@@ -174,6 +215,12 @@ void Inspector::draw()
             }
         }
     }
-
+    fileDialog.Display();
+    if(fileDialog.HasSelected())
+    {
+        std::cout << "Selected filename" << fileDialog.GetSelected().string() << std::endl;
+        *fileBrowserString = removeUpToScripts(fileDialog.GetSelected().string());
+        fileDialog.ClearSelected();
+    }
     ImGui::End();
 }

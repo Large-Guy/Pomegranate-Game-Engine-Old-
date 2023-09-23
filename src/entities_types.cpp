@@ -130,14 +130,38 @@ void MeshRenderer::draw(float delta)
 
 //ScriptableEntity
 
+
+std::string input_file_string(const std::string& file_path) 
+{
+    // Check if the file exists and is a regular file
+    if (!std::filesystem::exists(file_path) || !std::filesystem::is_regular_file(file_path)) {
+        return ""; // Return an empty string to indicate an error
+    }
+
+    std::ifstream input_file(file_path);
+
+    if (!input_file.is_open()) {
+        return ""; // Return an empty string to indicate an error
+    }
+
+    std::string file_contents(
+        (std::istreambuf_iterator<char>(input_file)),
+        (std::istreambuf_iterator<char>())
+    );
+
+    input_file.close();
+
+    return file_contents;
+}
+
 //Functions
 ScriptableEntity::ScriptableEntity(std::string name,std::string script_src, std::string script_string)
 {
     this->name = name;
     this->script_src = script_src;
     this->script_string = script_string;
-    display_property(script_src,&this->script_src,PROPERTY_STRING);
-    display_property(script_src,&this->script_string,PROPERTY_MULTILINE);
+    this->opened = false;
+    display_property(script_src,&this->script_src,PROPERTY_SCRIPT);
     my_script_state = tea_open();
     //Add modules
     TeaModule_add_debug(my_script_state);
@@ -164,41 +188,48 @@ ScriptableEntity::~ScriptableEntity()
 
 void ScriptableEntity::update(float delta)
 {
-    tea_get_global(my_script_state,"update");
-    if(tea_is_function(my_script_state,0))
-        tea_call(my_script_state,0);
+    if(this->opened)
+    {
+        tea_get_global(my_script_state,"update");
+        if(tea_is_function(my_script_state,-1))
+            tea_call(my_script_state,0);
+    }
 }
 
 void ScriptableEntity::draw(float delta)
 {
-    tea_get_global(my_script_state,"draw");
-    if(tea_is_function(my_script_state,0))
-        tea_call(my_script_state,0);
+    if(this->opened)
+    {
+        tea_get_global(my_script_state,"draw");
+        if(tea_is_function(my_script_state,-1))
+            tea_call(my_script_state,0);
+    }
 }
 
 
 void ScriptableEntity::editor_update(float delta)
 {
-    if(lst_src_script != script_string)
+    script_string = input_file_string("res/scripts/"+this->script_src);
+    if(script_string!=lst_src_script)
     {
-        try
-        {
-            tea_interpret(my_script_state,"",script_string.c_str());
-        }
-        catch(const std::exception& e)
-        {
-            std::cerr << e.what() << '\n';
-        }
+        tea_interpret(my_script_state,"",script_string.c_str());
         lst_src_script = script_string;
+        this->opened = true;
     }
-    tea_get_global(my_script_state,"editor_update");
-    if(tea_is_function(my_script_state,0))
-        tea_call(my_script_state,0);
+    if(this->opened)
+    {
+        tea_get_global(my_script_state,"editor_update");
+        if(tea_is_function(my_script_state,-1))
+            tea_call(my_script_state,0);
+    }
 }
 
 void ScriptableEntity::editor_draw(float delta)
 {
-    tea_get_global(my_script_state,"editor_draw");
-    if(tea_is_function(my_script_state,0))
-        tea_call(my_script_state,0);
+    if(this->opened)
+    {
+        tea_get_global(my_script_state,"editor_draw");
+        if(tea_is_function(my_script_state,-1))
+            tea_call(my_script_state,0);
+    }
 }

@@ -3,6 +3,7 @@
 #include <string>
 
 #include <imgui.h>
+#include"imfilebrowser.h"
 
 #include "glm.hpp"
 #include "ext.hpp"
@@ -13,6 +14,9 @@
 
 class Inspector : public EditorWindow
 {
+private:
+    ImGui::FileBrowser fileDialog;
+    std::string* fileBrowserString;
 public:
     int inspector_id;
 
@@ -25,6 +29,7 @@ public:
     void display_string(std::string*v);
     void display_multiline(std::string*v);
     void display_asset(std::string*v);
+    void display_script(std::string*v);
     void display_color(glm::vec4*v);
     void display_bool(bool*v);
     void draw() override;

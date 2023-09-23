@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <filesystem>
 
 #include "../lib/glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -60,6 +61,7 @@ class ScriptableEntity: public Entity
 {
 private:
     std::string lst_src_script;
+    bool opened;
 public:
     std::string script_src;
     std::string script_string;
