@@ -2,6 +2,7 @@
 
 #include <string>
 #include <memory>
+#include <filesystem>
 
 #include <imgui.h>
 #include <backends/imgui_impl_glfw.h>

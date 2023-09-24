@@ -276,11 +276,15 @@ void teascript_entity_set_property(TeaState*T)
 
 //Tea module
 const TeaModule TeaModule_entity[] = {
-    {"pub",teascript_entity_display},
+    {"public",teascript_entity_display},
     {"self",teascript_entity_self},
     {"find",teascript_entity_find},
     {"get",teascript_entity_get_property},
     {"set",teascript_entity_set_property},
+    {"position",NULL},
+    {"rotation",NULL},
+    {"scale",NULL},
+    {"name",NULL},
     {NULL,NULL}
 };
 
