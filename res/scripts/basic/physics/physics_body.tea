@@ -1,0 +1,36 @@
+import Entity
+import Pomegranate as p
+import Debug
+
+var what = Entity.self()
+var force = [500.0,1000.0,0.0]
+var velocity = [0.0,0.0,0.0]
+var mass = 1
+var gravity = 9.81
+var drag = 0.25
+
+var dt = 0.016
+
+function editor_update()
+{
+    var dragForce = p.div3(p.mul3(velocity,-drag),mass)
+    
+    force = p.add3(p.add3(force,[0.0,-9.81*mass,0.0]),dragForce)
+    velocity = p.add3(velocity,p.mul3(p.div3(force,mass),dt))
+    Entity.set(what,"position",p.add3(Entity.get(what,"position"),p.mul3(velocity,dt)))
+    if(Entity.get(what,"position")[1] < 0)
+    {
+        var u = Entity.get(what,"position")
+        u[1] = 0
+        Entity.set(what,"position",u)
+    }
+    force = [0.0,0.0,0.0]
+}
+
+function editor_draw()
+{
+    Debug.color([0.0,1.0,0.0])
+    Debug.begin()
+    Debug.sphere(Entity.get(what,"position"),0.5)
+    Debug.end()
+}

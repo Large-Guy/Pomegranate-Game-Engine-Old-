@@ -1,0 +1,14 @@
+import Entity
+import Pomegranate
+
+var time = 0.0
+
+var what = 1
+
+var rotation = [0.0,0.01,0.0]
+
+function editor_update()
+{
+    time += 0.0166
+    Entity.set(what,"rotation", Pomegranate.add3(Entity.get(what,"rotation"),rotation))
+}

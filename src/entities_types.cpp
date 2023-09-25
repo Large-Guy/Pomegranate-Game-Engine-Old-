@@ -179,6 +179,15 @@ ScriptableEntity::ScriptableEntity(std::string name,std::string script_src, std:
     tea_set_global(my_script_state,"draw");
     tea_push_null(my_script_state);
     tea_set_global(my_script_state,"update");
+    
+    tea_tools_push_vec3(my_script_state,this->position);
+    tea_set_global(my_script_state,"position");
+    tea_tools_push_vec3(my_script_state,this->rotation);
+    tea_set_global(my_script_state,"rotation");
+    tea_tools_push_vec3(my_script_state,this->scale);
+    tea_set_global(my_script_state,"scale");
+    tea_push_number(my_script_state,this->ID);
+    tea_set_global(my_script_state,"self");
 }
 
 ScriptableEntity::~ScriptableEntity()
@@ -188,27 +197,63 @@ ScriptableEntity::~ScriptableEntity()
 
 void ScriptableEntity::update(float delta)
 {
+    tea_tools_push_vec3(my_script_state,this->position);
+    tea_set_global(my_script_state,"position");
+    tea_tools_push_vec3(my_script_state,this->rotation);
+    tea_set_global(my_script_state,"rotation");
+    tea_tools_push_vec3(my_script_state,this->scale);
+    tea_set_global(my_script_state,"scale");
+    tea_push_number(my_script_state,this->ID);
+    tea_set_global(my_script_state,"self");
     if(this->opened)
     {
         tea_get_global(my_script_state,"update");
         if(tea_is_function(my_script_state,-1))
             tea_call(my_script_state,0);
     }
+    tea_get_global(my_script_state,"position");
+    this->position = tea_tools_check_vec3(my_script_state,0);
+    tea_get_global(my_script_state,"rotation");
+    this->rotation = tea_tools_check_vec3(my_script_state,0);
+    tea_get_global(my_script_state,"scale");
+    this->scale = tea_tools_check_vec3(my_script_state,0);
 }
 
 void ScriptableEntity::draw(float delta)
 {
+    tea_tools_push_vec3(my_script_state,this->position);
+    tea_set_global(my_script_state,"position");
+    tea_tools_push_vec3(my_script_state,this->rotation);
+    tea_set_global(my_script_state,"rotation");
+    tea_tools_push_vec3(my_script_state,this->scale);
+    tea_set_global(my_script_state,"scale");
+    tea_push_number(my_script_state,this->ID);
+    tea_set_global(my_script_state,"self");
     if(this->opened)
     {
         tea_get_global(my_script_state,"draw");
         if(tea_is_function(my_script_state,-1))
             tea_call(my_script_state,0);
     }
+    tea_get_global(my_script_state,"position");
+    this->position = tea_tools_get_vec3(my_script_state,0);
+    tea_get_global(my_script_state,"rotation");
+    this->rotation = tea_tools_get_vec3(my_script_state,0);
+    tea_get_global(my_script_state,"scale");
+    this->scale = tea_tools_get_vec3(my_script_state,0);
 }
 
 
 void ScriptableEntity::editor_update(float delta)
 {
+    tea_tools_push_vec3(my_script_state,this->position);
+    tea_set_global(my_script_state,"position");
+    tea_tools_push_vec3(my_script_state,this->rotation);
+    tea_set_global(my_script_state,"rotation");
+    tea_tools_push_vec3(my_script_state,this->scale);
+    tea_set_global(my_script_state,"scale");
+    tea_push_number(my_script_state,this->ID);
+    tea_set_global(my_script_state,"self");
     script_string = input_file_string("res/scripts/"+this->script_src);
     if(script_string!=lst_src_script)
     {
@@ -222,14 +267,34 @@ void ScriptableEntity::editor_update(float delta)
         if(tea_is_function(my_script_state,-1))
             tea_call(my_script_state,0);
     }
+    tea_get_global(my_script_state,"position");
+    this->position = tea_tools_check_vec3(my_script_state,0);
+    tea_get_global(my_script_state,"rotation");
+    this->rotation = tea_tools_check_vec3(my_script_state,0);
+    tea_get_global(my_script_state,"scale");
+    this->scale = tea_tools_check_vec3(my_script_state,0);
 }
 
 void ScriptableEntity::editor_draw(float delta)
 {
+    tea_tools_push_vec3(my_script_state,this->position);
+    tea_set_global(my_script_state,"position");
+    tea_tools_push_vec3(my_script_state,this->rotation);
+    tea_set_global(my_script_state,"rotation");
+    tea_tools_push_vec3(my_script_state,this->scale);
+    tea_set_global(my_script_state,"scale");
+    tea_push_number(my_script_state,this->ID);
+    tea_set_global(my_script_state,"self");
     if(this->opened)
     {
         tea_get_global(my_script_state,"editor_draw");
         if(tea_is_function(my_script_state,-1))
             tea_call(my_script_state,0);
     }
+    tea_get_global(my_script_state,"position");
+    this->position = tea_tools_check_vec3(my_script_state,0);
+    tea_get_global(my_script_state,"rotation");
+    this->rotation = tea_tools_check_vec3(my_script_state,0);
+    tea_get_global(my_script_state,"scale");
+    this->scale = tea_tools_check_vec3(my_script_state,0);
 }

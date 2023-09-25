@@ -284,6 +284,7 @@ const TeaModule TeaModule_entity[] = {
     {"position",NULL},
     {"rotation",NULL},
     {"scale",NULL},
+    {"ID",NULL},
     {"name",NULL},
     {NULL,NULL}
 };

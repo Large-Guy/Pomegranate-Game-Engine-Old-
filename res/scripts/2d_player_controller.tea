@@ -1,0 +1,49 @@
+import Pomegranate as p
+import Entity
+import Input
+import Debug
+
+var speed = 5.0
+var drag = 0.8
+var jump_speed = 0.5
+var jumped = false
+var velocity = [0.0,0.0,0.0]
+var dt = 0.016
+
+function editor_update()
+{
+    velocity = p.add3(velocity,[Input.axis(263,262)*speed*dt,-2*dt,Input.axis(265,264)*speed*dt])
+    velocity[0] *= drag //drag
+    velocity[2] *= drag //drag
+    if(Input.down(" "))
+    {
+        if(!jumped)
+        {
+            velocity[1] = jump_speed
+        }
+        jumped = true
+    }
+    else
+    {
+        jumped = false
+    }
+    Entity.set(Entity.self(),"position",p.add3(Entity.get(Entity.self(),"position"),velocity))
+    if(Entity.get(Entity.self(),"position")[1] < 0)
+    {
+        var pos = Entity.get(Entity.self(),"position")
+        Entity.set(Entity.self(),"position",[pos[0],0.0,pos[2]])
+        velocity[1] = 0.0
+    }
+    var cam_pos = Entity.get(Entity.self(),"position")
+    cam_pos[2] += 10
+    cam_pos[1] += 3
+    Entity.set(0,"position", p.add3(Entity.get(0,"position"),p.mul3(p.sub3(cam_pos,Entity.get(0,"position")),0.1)))
+}
+
+function editor_draw()
+{
+    Debug.color([0.094,0.47,0.44])
+    Debug.begin()
+    Debug.sphere(Entity.get(Entity.self(),"position"),1)
+    Debug.end()
+}
