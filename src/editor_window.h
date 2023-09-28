@@ -25,6 +25,8 @@ public:
 };
 
 void teascript_begin_window(TeaState* T);
+void teascript_button(TeaState*T);
+void teascript_text(TeaState*T);
+void teascript_checkbox(TeaState*T);
 void teascript_end_window(TeaState* T);
 void TeaModule_add_window(TeaState*T);
-void teascript_button(TeaState*T);

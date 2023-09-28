@@ -71,5 +71,7 @@ public:
     void draw(float delta);
     void editor_draw(float delta);
     void editor_update(float delta);
+    void ui(float delta);
+    void editor_ui(float delta);
     ~ScriptableEntity();
 };

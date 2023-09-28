@@ -163,6 +163,8 @@ void Entity::update(float delta){}
 void Entity::draw(float delta){} 
 void Entity::editor_update(float delta){}
 void Entity::editor_draw(float delta){}
+void Entity::editor_ui(float delta){}
+void Entity::ui(float delta){}
 
 //Teascript
 
@@ -273,6 +275,55 @@ void teascript_entity_set_property(TeaState*T)
     }
     tea_push_null(T);
 }
+void teascript_entity_position(TeaState*T)
+{
+    if(tea_get_top(T))
+    {
+        Entity::current->position = tea_tools_check_vec3(T,0);
+        tea_push_null(T);
+    }
+    else
+    {
+        tea_tools_push_vec3(T,Entity::current->position);
+    }
+}
+void teascript_entity_rotation(TeaState*T)
+{
+    if(tea_get_top(T))
+    {
+        Entity::current->rotation = tea_tools_check_vec3(T,0);
+        tea_push_null(T);
+    }
+    else
+    {
+        tea_tools_push_vec3(T,Entity::current->rotation);
+    }
+}
+void teascript_entity_scale(TeaState*T)
+{
+    if(tea_get_top(T))
+    {
+        Entity::current->scale = tea_tools_check_vec3(T,0);
+        tea_push_null(T);
+    }
+    else
+    {
+        tea_tools_push_vec3(T,Entity::current->scale);
+    }
+}
+void teascript_entity_name(TeaState*T)
+{
+    if(tea_get_top(T))
+    {
+        Entity::current->name = tea_check_string(T,0);
+        tea_push_null(T);
+    }
+    else
+    {
+        tea_push_string(T,Entity::current->name.c_str());
+    }
+}
+
 
 //Tea module
 const TeaModule TeaModule_entity[] = {
@@ -281,11 +332,10 @@ const TeaModule TeaModule_entity[] = {
     {"find",teascript_entity_find},
     {"get",teascript_entity_get_property},
     {"set",teascript_entity_set_property},
-    {"position",NULL},
-    {"rotation",NULL},
-    {"scale",NULL},
-    {"ID",NULL},
-    {"name",NULL},
+    {"position",teascript_entity_position},
+    {"rotation",teascript_entity_rotation},
+    {"scale",teascript_entity_scale},
+    {"name",teascript_entity_name},
     {NULL,NULL}
 };
 

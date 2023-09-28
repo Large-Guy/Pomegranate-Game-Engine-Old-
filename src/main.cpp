@@ -194,7 +194,7 @@ int main(int, char **)
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
-
+        world.ui(INT_MAX);
         //Editor UI
         for (long unsigned int i = 0; i < Windows.size(); i++)
         {

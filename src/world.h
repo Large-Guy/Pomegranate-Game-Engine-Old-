@@ -21,4 +21,5 @@ public:
     void set_current();
     void update(int render_layers);
     void draw(int render_layers);
+    void ui(int render_layers);
 };

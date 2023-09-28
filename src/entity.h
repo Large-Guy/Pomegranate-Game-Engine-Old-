@@ -67,6 +67,8 @@ public:
     virtual void draw(float delta);
     virtual void editor_update(float delta);
     virtual void editor_draw(float delta);
+    virtual void editor_ui(float delta);
+    virtual void ui(float delta);
     void entity_set_current();
     glm::mat4 get_model_matrix(int i = -1);
     static Entity* get_entity(std::string name);
@@ -82,3 +84,7 @@ void teascript_entity_find(TeaState*T);
 void teascript_entity_get_property(TeaState*T);
 void teascript_entity_set_property(TeaState*T);
 void TeaModule_add_entity(TeaState* T);
+void teascript_entity_position(TeaState*T);
+void teascript_entity_rotation(TeaState*T);
+void teascript_entity_scale(TeaState*T);
+void teascript_entity_name(TeaState*T);

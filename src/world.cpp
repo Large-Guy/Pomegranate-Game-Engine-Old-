@@ -84,6 +84,29 @@ void World::update(int render_layers)
         }
     }
 }
+
+void World::ui(int render_layers)
+{
+    for(long unsigned int i = 0; i < entities.size(); i++)
+    {
+        if(entities[i]->render_layers & render_layers)
+        {
+            entities[i]->entity_set_current();
+            entities[i]->ui(0.016f);
+            
+            //Editor
+            entities[i]->editor_ui(0.016f);
+            
+            for(long unsigned int z = 0; z < entities[i]->children.size(); z++)
+            {
+                entities[i]->children[z]->entity_set_current();
+                entities[i]->children[z]->update(0.016f);
+                //Editor
+                entities[i]->editor_update(0.016f);
+            }
+        }
+    }
+}
 void World::draw(int render_layers)
 {
     for(long unsigned int i = 0; i < entities.size(); i++)
