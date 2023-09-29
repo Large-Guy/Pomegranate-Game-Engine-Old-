@@ -2,6 +2,8 @@ import Pomegranate as p
 import Entity
 import Input
 import Debug
+import math
+import Window
 
 var speed = 5.0
 var drag = 0.8
@@ -10,12 +12,17 @@ var jumped = false
 var velocity = [0.0,0.0,0.0]
 var dt = 0.016
 
+
+
 function editor_update()
 {
-    velocity = p.add3(velocity,[Input.axis(263,262)*speed*dt,-2*dt,Input.axis(265,264)*speed*dt])
+    var r = -Entity.get(0,"rotation")[1]
+    velocity = p.add3(velocity,p.mul3([math.sin(r),0,math.cos(r)],Input.axis('W','S')*speed*dt))
+    velocity = p.add3(velocity,p.mul3([math.sin(r+math.pi/2),0,math.cos(r+math.pi/2)],Input.axis('A','D')*speed*dt))
     velocity[0] *= drag //drag
+    velocity[1] -= 0.981*dt //Gravity
     velocity[2] *= drag //drag
-    if(Input.down(" "))
+    if(Input.down(' '))
     {
         if(!jumped)
         {
@@ -27,15 +34,18 @@ function editor_update()
     {
         jumped = false
     }
-    Entity.set(Entity.self(),"position",p.add3(Entity.get(Entity.self(),"position"),velocity))
+    position = p.add3(position,velocity)
+    
     if(Entity.get(Entity.self(),"position")[1] < 0)
     {
-        var pos = Entity.get(Entity.self(),"position")
-        Entity.set(Entity.self(),"position",[pos[0],0.0,pos[2]])
+        var pos = position
+        position = [pos[0],0.0,pos[2]]
         velocity[1] = 0.0
     }
+    
     var cam_pos = Entity.get(Entity.self(),"position")
-    cam_pos[2] += 10
+    cam_pos[0] += math.sin(-Entity.get(0,"rotation")[1])*10
+    cam_pos[2] += math.cos(-Entity.get(0,"rotation")[1])*10
     cam_pos[1] += 3
     Entity.set(0,"position", p.add3(Entity.get(0,"position"),p.mul3(p.sub3(cam_pos,Entity.get(0,"position")),0.1)))
 }
@@ -46,4 +56,12 @@ function editor_draw()
     Debug.begin()
     Debug.sphere(Entity.get(Entity.self(),"position"),1)
     Debug.end()
+}
+
+function editor_ui()
+{
+    Window.open("Player Debug Info")
+    Window.text("My ID: " + string(Entity.self()))
+    Window.text(string(velocity))
+    Window.close()
 }
